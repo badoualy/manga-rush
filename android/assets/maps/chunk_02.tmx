@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="15" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="map_atlas" tilewidth="32" tileheight="32">
+  <image source="../sheets/map_atlas.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="name" value="GRASS_FILL"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="name" value="GRASS_HALF_LEFT"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="name" value="GRASS_HALF_MID"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="name" value="GRASS_HALF_RIGHT"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="name" value="GRASS_LEFT"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="name" value="GRASS_MID"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="name" value="GRASS_RIGHT"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="name" value="SIGN_RIGHT"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="name" value="GRASS_HALF_WATER_LEFT"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="name" value="GRASS_HALF_WATER_MID"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="name" value="GRASS_HALF_WATER_RIGHT"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="name" value="LAVA_FILL"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="name" value="LAVA_TOP"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="name" value="WATER_FILL"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="name" value="WATER_TOP"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="floor" width="30" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBTQC3BQ2TxWIGYDYnYg5kfCnEDMDcRceDA3mh4YRjYTl9sZkTAflTCymbjcQmt7sYmN2jv87QUACn27uwgHAAA=
+  </data>
+ </layer>
+ <objectgroup name="floor_obj" width="32" height="16">
+  <object x="0" y="256" width="96" height="224"/>
+  <object x="192" y="256" width="320" height="16"/>
+  <object x="672" y="256" width="96" height="224"/>
+  <object x="832" y="288" width="96" height="192"/>
+ </objectgroup>
+</map>

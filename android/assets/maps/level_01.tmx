@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="12" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="sheet_02" tilewidth="32" tileheight="32">
+  <image source="../sheets/sheet_01.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="50" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwCkYBtYEgEEtCsRABtaxImJsIs9kJmEEIIwMuLPLEuEEGiz4mJIwOsNmDzV4mEjC1AC3sAACnvdmLYAkAAA==
+  </data>
+ </layer>
+ <objectgroup name="floor_obj" width="50" height="12">
+  <object x="0" y="322" width="351" height="62"/>
+  <object x="448" y="319" width="192" height="32"/>
+  <object x="704" y="288" width="128" height="18"/>
+  <object x="896" y="320" width="32" height="32"/>
+  <object x="928" y="320" width="222" height="65"/>
+  <object x="1057" y="289" width="127" height="31"/>
+  <object x="1279" y="321" width="322" height="31"/>
+ </objectgroup>
+</map>
