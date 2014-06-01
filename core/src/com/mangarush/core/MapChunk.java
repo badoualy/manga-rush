@@ -1,5 +1,7 @@
 package com.mangarush.core;
 
+import static com.mangarush.utils.B2DVars.floorBody;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -48,64 +49,10 @@ public class MapChunk {
 			for (int j = 0; j < HEIGHT; j++) {
 				Cell cell = floorLayer.getCell(i, j);
 				if (cell != null) {
-					switch (cell.getTile().getProperties().get("name", String.class)) {
-						case "GRASS_LEFT":
-							map[i][j] = MapConstants.GRASS_LEFT;
-							break;
-						case "GRASS_MID":
-							map[i][j] = MapConstants.GRASS_MID;
-							break;
-						case "GRASS_RIGHT":
-							map[i][j] = MapConstants.GRASS_RIGHT;
-							break;
-						case "GRASS_FILL":
-							map[i][j] = MapConstants.GRASS_FILL;
-							break;
-
-						case "GRASS_HALF_LEFT":
-							map[i][j] = MapConstants.GRASS_HALF_LEFT;
-							break;
-						case "GRASS_HALF_MID":
-							map[i][j] = MapConstants.GRASS_HALF_MID;
-							break;
-						case "GRASS_HALF_RIGHT":
-							map[i][j] = MapConstants.GRASS_HALF_RIGHT;
-							break;
-
-						case "GRASS_HALF_WATER_LEFT":
-							map[i][j] = MapConstants.GRASS_HALF_WATER_LEFT;
-							break;
-						case "GRASS_HALF_WATER_MID":
-							map[i][j] = MapConstants.GRASS_HALF_WATER_MID;
-							break;
-						case "GRASS_HALF_WATER_RIGHT":
-							map[i][j] = MapConstants.GRASS_HALF_WATER_RIGHT;
-							break;
-
-						case "WATER_FILL":
-							map[i][j] = MapConstants.WATER_FILL;
-							break;
-						case "WATER_TOP":
-							map[i][j] = MapConstants.WATER_TOP;
-							break;
-						case "LAVA_FILL":
-							map[i][j] = MapConstants.LAVA_FILL;
-							break;
-						case "LAVA_TOP":
-							map[i][j] = MapConstants.LAVA_TOP;
-							break;
-
-						case "SIGN_RIGHT":
-							map[i][j] = MapConstants.SIGN_RIGHT;
-							break;
-
-						default:
-							map[i][j] = MapConstants.EMPTY;
-							break;
-					}
-				} else {
+					// -1 because starts with 1
+					map[i][j] = (short) (cell.getTile().getId() - 1);
+				} else
 					map[i][j] = MapConstants.EMPTY;
-				}
 			}
 		}
 
@@ -138,19 +85,20 @@ public class MapChunk {
 		if (world == null)
 			return;
 
-		// Bodies and fixtures
-		Body body;
-		BodyDef bdef = new BodyDef();
-		FixtureDef fdef = new FixtureDef();
+		// First body allocation
+		if (floorBody == null) {
+			BodyDef bdef = new BodyDef();
+			bdef.type = BodyType.StaticBody;
+			bdef.fixedRotation = true;
+			bdef.position.set(0, 0);
+
+			floorBody = world.createBody(bdef);
+		}
 
 		// Temp vars
+		FixtureDef fdef = new FixtureDef();
 		PolygonShape ps;
-		Vector2 position = new Vector2();
 		Vector2 center = new Vector2();
-
-		// Common body defs
-		bdef.type = BodyType.StaticBody;
-		bdef.fixedRotation = true;
 
 		// Common fixture defs 
 		fdef.filter.categoryBits = B2DVars.GROUND_MASK;
@@ -159,18 +107,13 @@ public class MapChunk {
 		// Loop through all floor rectangles
 		// Don't need to be synchronized if called in ui's thread
 		for (Rectangle rect : floorRects) {
-			// Body
-			position.x = (originX + rect.x) / B2DVars.PPM;
-			position.y = (originY + rect.y) / B2DVars.PPM;
-			bdef.position.set(position);
-			B2DVars.bodies.add(body = world.createBody(bdef));
-
 			// Fixture
-			center.x = (rect.width / 2f) / B2DVars.PPM;
-			center.y = (rect.height / 2f) / B2DVars.PPM;
+			center.x = (originX + rect.x + rect.width / 2f) / B2DVars.PPM;
+			center.y = (originY + rect.y + rect.height / 2f) / B2DVars.PPM;
 			fdef.shape = ps = new PolygonShape();
-			ps.setAsBox(center.x, center.y, center, 0);
-			body.createFixture(fdef);
+			ps.setAsBox(rect.width / 2f / B2DVars.PPM, rect.height / 2f / B2DVars.PPM, center, 0);
+			floorBody.createFixture(fdef);
+			ps.dispose();
 		}
 	}
 

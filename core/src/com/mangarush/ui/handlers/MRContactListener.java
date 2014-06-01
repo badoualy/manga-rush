@@ -36,9 +36,9 @@ public class MRContactListener implements ContactListener {
 					// fA is wall sensor
 					player.hitWall();
 					// Remove bumped body from world to prevent some collisions bugs
-					/*synchronized (B2DVars.bodies) {
-						B2DVars.bodiesToRemove.add(fB.getBody());
-					}*/
+					/* synchronized (B2DVars.bodies) {
+					 * B2DVars.bodiesToRemove.add(fB.getBody());
+					 * } */
 				}
 			}
 		}

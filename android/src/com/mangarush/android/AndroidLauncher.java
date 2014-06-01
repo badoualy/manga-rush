@@ -1,4 +1,4 @@
-package com.mangarush.ui.android;
+package com.mangarush.android;
 
 import android.os.Bundle;
 

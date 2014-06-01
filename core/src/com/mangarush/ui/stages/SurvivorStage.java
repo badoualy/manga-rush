@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -30,7 +29,6 @@ public class SurvivorStage extends Stage {
 
 	// B2D
 	private World world;
-	private Box2DDebugRenderer b2dr;
 
 	// Cameras
 	private OrthographicCamera b2dCam;
@@ -87,7 +85,6 @@ public class SurvivorStage extends Stage {
 		// World : Graivity gx = 0, gy = -9.81 topward
 		world = new World(B2DVars.GRAVITY, true);
 		world.setContactListener(new MRContactListener());
-		b2dr = new Box2DDebugRenderer();
 
 		// Bodies and fixtures
 		Body body;
@@ -100,28 +97,33 @@ public class SurvivorStage extends Stage {
 		float pHeight = player.getHeight();
 		bdef.position.set(pWidth / 2f / PPM, (V_HEIGHT - pHeight / 2) / PPM);
 		bdef.type = BodyType.DynamicBody; // To dynamic
+		bdef.fixedRotation = true;
 		body = world.createBody(bdef);
 		body.setUserData(player); // Set userData as player to retrieve in contact listener
 		player.setBody(body); // Set player's actor's body
 
 		// Player fixture
 		fdef.shape = ps = new PolygonShape();
+		fdef.friction = 0;
 		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
 		fdef.filter.maskBits = B2DVars.GROUND_MASK;
 		ps.setAsBox(pWidth / 2f / PPM, pHeight / 2f / PPM);
 		body.createFixture(fdef);
+		ps.dispose();
 
 		// Player foot sensor
 		fdef.isSensor = true;
 		fdef.shape = ps = new PolygonShape();
 		ps.setAsBox(pWidth / 6f / PPM, 5f / PPM, new Vector2(0, -pHeight / 2f / PPM), 0f);
 		body.createFixture(fdef).setUserData(B2DVars.USERD_FOOT_SENSOR);
+		ps.dispose();
 
 		// Player wall sensor
 		fdef.isSensor = true;
 		fdef.shape = ps = new PolygonShape();
 		ps.setAsBox(pWidth / 6f / PPM, (player.getHeight() - 5) / 2f / PPM, new Vector2(pWidth / 2f / PPM, 0), 0f);
 		body.createFixture(fdef).setUserData(B2DVars.USERD_WALL_SENSOR);
+		ps.dispose();
 	}
 
 	private void initMap() {
@@ -135,16 +137,13 @@ public class SurvivorStage extends Stage {
 	/** Gamestep */
 	private void update(float delta) {
 		// Check if bodies to remove
-		/* if (!B2DVars.bodiesToRemove.isEmpty()) {
-		 * synchronized (B2DVars.bodies) {
-		 * // Remove all from bodies list
-		 * B2DVars.bodies.removeAll(B2DVars.bodiesToRemove);
-		 * // Remove from world
-		 * for (int i = 0; i < B2DVars.bodiesToRemove.size();) {
-		 * world.destroyBody(B2DVars.bodiesToRemove.remove(i));
-		 * }
-		 * }
-		 * } */
+		if (!B2DVars.fixToRemove.isEmpty()) {
+			synchronized (B2DVars.floorBody) {
+				// Remove from world
+				for (int i = 0; i < B2DVars.fixToRemove.size();)
+					B2DVars.floorBody.destroyFixture(B2DVars.fixToRemove.get(i));
+			}
+		}
 
 		// Update B2D world
 		world.step(Game.STEP, 6, 2);
@@ -154,7 +153,6 @@ public class SurvivorStage extends Stage {
 	public void draw() {
 		// Update default cam position (+ fix position)
 		cam.position.x = Math.max(player.getCenterX(), cam.viewportWidth / 2);
-
 		cam.update();
 		map.setPosition(cam.position.x - cam.viewportWidth / 2);
 		getBatch().setProjectionMatrix(cam.combined);
@@ -162,9 +160,6 @@ public class SurvivorStage extends Stage {
 		// Update Box2D camera position (+ fix position)
 		b2dCam.position.x = Math.max(player.getCenterX() / PPM, b2dCam.viewportWidth / 2);
 		b2dCam.update();
-
-		// Draw B2D world : no need to use actor
-		//b2dr.render(world, b2dCam.combined);
 
 		// Draw actors
 		super.draw();

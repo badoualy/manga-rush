@@ -45,7 +45,7 @@ public class Player extends Actor {
 		alive = true;
 
 		// Create animations and textures
-		atlas = new TextureAtlas(GDXVars.charactersPath + "naruto.txt");
+		atlas = new TextureAtlas(GDXVars.charactersDir + "naruto.txt");
 		runAnimation = new Animation(0.12f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);
 		fallAnimation = new Animation(0.15f, atlas.findRegions("fall"), PlayMode.LOOP);
@@ -114,8 +114,7 @@ public class Player extends Actor {
 
 		// Give run impulse to b2d-body if we are running
 		if (state == State.RUN) {
-			Vector2 impulse = new Vector2(B2DVars.PLAYER_MAX_SPEED - body.getLinearVelocity().x, 0);
-			body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+			body.setLinearVelocity(B2DVars.PLAYER_MAX_SPEED, 0);
 		}
 
 		// Update jump permission

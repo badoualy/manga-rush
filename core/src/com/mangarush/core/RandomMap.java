@@ -69,22 +69,21 @@ public class RandomMap {
 	/** Inner-class with all map-related constants */
 	public static class MapConstants {
 		// Tile types
-		public static final short EMPTY = 0;
-		public static final short GRASS_LEFT = 1;
-		public static final short GRASS_MID = 2;
-		public static final short GRASS_RIGHT = 3;
-		public static final short GRASS_FILL = 4;
-		public static final short GRASS_HALF_LEFT = 5;
-		public static final short GRASS_HALF_MID = 6;
-		public static final short GRASS_HALF_RIGHT = 7;
-		public static final short GRASS_HALF_WATER_LEFT = 8;
-		public static final short GRASS_HALF_WATER_MID = 9;
-		public static final short GRASS_HALF_WATER_RIGHT = 10;
-		public static final short WATER_FILL = 11;
-		public static final short WATER_TOP = 12;
-		public static final short LAVA_FILL = 13;
-		public static final short LAVA_TOP = 14;
-		public static final short SIGN_RIGHT = 15;
-		
+		public static final short EMPTY = -1;
+		public static final short GRASS_LEFT = 0;
+		public static final short GRASS_MID = 1;
+		public static final short GRASS_RIGHT = 2;
+		public static final short GRASS_FILL = 3;
+		public static final short GRASS_HALF_LEFT = 4;
+		public static final short GRASS_HALF_MID = 5;
+		public static final short GRASS_HALF_RIGHT = 6;
+		public static final short GRASS_HALF_WATER_LEFT = 7;
+		public static final short GRASS_HALF_WATER_MID = 8;
+		public static final short GRASS_HALF_WATER_RIGHT = 9;
+		public static final short WATER_FILL = 10;
+		public static final short WATER_TOP = 11;
+		public static final short LAVA_FILL = 12;
+		public static final short LAVA_TOP = 13;
+		public static final short SIGN_RIGHT = 14;
 	}
 }

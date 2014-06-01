@@ -17,7 +17,7 @@ public class HUD extends Actor {
 		this.player = player;
 
 		// Load font and batch
-		font = GDXVars.font;
+		font = GDXVars.assetManager.get(GDXVars.defaultFont, BitmapFont.class);
 		batch = GDXVars.hudBatch;
 	}
 
