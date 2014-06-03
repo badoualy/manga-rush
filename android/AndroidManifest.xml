@@ -16,7 +16,7 @@
         android:persistent="false"
         android:theme="@style/GdxTheme" >
         <activity
-            android:name="com.mangarush.ui.android.AndroidLauncher"
+            android:name="com.mangarush.android.AndroidLauncher"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>

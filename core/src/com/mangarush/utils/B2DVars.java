@@ -24,7 +24,7 @@ public abstract class B2DVars {
 	public static final String USERD_WALL_SENSOR = "wall_sensor";
 
 	/** Player max speed : impulse to apply */
-	public static final float PLAYER_MAX_SPEED = 250f / PPM;
+	public static final float PLAYER_MAX_SPEED = 225f / PPM;
 	/** Player jump force : impulse to apply */
 	public static final float JUMP_FORCE = 200f / PPM;
 	/** Player jump timeout in seconds */

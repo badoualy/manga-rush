@@ -5,13 +5,13 @@
  </tileset>
  <layer name="floor" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBSMAsKAg4b6WYGYDYjZgZgXCSOLE+sOmB50jG42CDMiYR4kjCyObiY2c9DNQsc8eMzHZy8hc9D1jNpLnr0AV+j9jQgHAAA=
+   H4sIAAAAAAAAC+2QwQrAIAxD6/Tq/P+/XQULXcioY+zWwDtYY9oqkkqlUrHGj++LcihVOR1l1d7MYVkIZk/aYt53h9VZJsvxWYz+kI93VmOZOKPhd4z6eh/ry3wsB3docp9jd1/0R/Mzz5d/tvMFmxg+vAgHAAA=
   </data>
  </layer>
  <objectgroup name="floor_obj" width="30" height="15">
   <object x="0" y="352" width="128" height="128"/>
   <object x="288" y="320" width="224" height="160"/>
   <object x="640" y="288" width="96" height="192"/>
-  <object x="832" y="288" width="96" height="192"/>
+  <object x="832" y="288" width="64" height="192"/>
  </objectgroup>
 </map>

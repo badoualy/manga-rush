@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mangarush.ui.Game;
 import com.mangarush.utils.B2DVars;
-import com.mangarush.utils.GDXVars;
 
 /** HUD-actor : draw HUD on screen */
 public class HUD extends Actor {
@@ -17,8 +17,8 @@ public class HUD extends Actor {
 		this.player = player;
 
 		// Load font and batch
-		font = GDXVars.assetManager.get(GDXVars.defaultFont, BitmapFont.class);
-		batch = GDXVars.hudBatch;
+		font = Game.GDXVars().getFont(Game.GDXVars().defaultFont);
+		batch = Game.GDXVars().hudBatch;
 	}
 
 	@Override

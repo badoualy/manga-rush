@@ -5,7 +5,7 @@
  </tileset>
  <layer name="floor" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBQMZcAxAHpZgZgNitmBmB8LxqWGE4i5gJibRH0gzIiG+bBgYtSQqo8RyU30tpcY/xJyG6n6aB3OA2UvLn0ADcnOHggHAAA=
+   H4sIAAAAAAAAC2NgGAWjYBQMZcA/AHoZgZgJipmBmAcLxqWGA4g5gZiLSH3IgAVJDsTmxoJZ0DA2NcToQ7eXkJnUshc5LIi1l1CYkKoPWY6JBv7FZy+9whlZDgANa7C4CAcAAA==
   </data>
  </layer>
  <objectgroup name="floor_obj" width="30" height="15">

@@ -10,7 +10,7 @@ import com.mangarush.utils.MRVars;
  * Constructor grow map automatically
  */
 public class RandomMap {
-	private static final int STORED_CHUNKS = 6; // Chunks stored
+	private static final int STORED_CHUNKS = 25; // Chunks stored
 
 	// Map-related
 	private final short[] map;

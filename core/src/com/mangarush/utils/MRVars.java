@@ -1,6 +1,7 @@
 package com.mangarush.utils;
 
 import com.mangarush.core.MapChunk;
+import com.mangarush.ui.Game;
 
 /** Bunch of constants core-related */
 public class MRVars {
@@ -12,7 +13,7 @@ public class MRVars {
 		if (chunks == null) {
 			// First call : instanciate
 			// Get all chunks' filepath
-			String[] chunksPath = GDXVars.mapChunksTmx;
+			String[] chunksPath = Game.GDXVars().mapChunksTmx;
 
 			// Instanciate chunks
 			chunks = new MapChunk[chunksPath.length];

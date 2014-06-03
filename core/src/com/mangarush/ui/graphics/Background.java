@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
-import com.mangarush.utils.GDXVars;
+import com.mangarush.ui.Game;
 
 /** An actor that draw a background scrolling and repeating itself */
 public class Background extends BaseDrawable {
@@ -16,7 +16,7 @@ public class Background extends BaseDrawable {
 		texture.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);
 
 		// Use the HUD's batch because same projection : full screen
-		batch = GDXVars.hudBatch;
+		batch = Game.GDXVars().hudBatch;
 	}
 
 	@Override

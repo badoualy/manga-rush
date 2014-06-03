@@ -19,7 +19,6 @@ import com.mangarush.ui.actors.Player;
 import com.mangarush.ui.actors.RandomMapActor;
 import com.mangarush.ui.handlers.MRContactListener;
 import com.mangarush.utils.B2DVars;
-import com.mangarush.utils.GDXVars;
 
 /** Survivor stage : continue until player lose */
 public class SurvivorStage extends Stage {
@@ -56,7 +55,7 @@ public class SurvivorStage extends Stage {
 		getViewport().setCamera(cam); // Set stage default camera
 
 		// Use first position to set HUD's batch projection : entire screen
-		GDXVars.hudBatch.setProjectionMatrix(cam.combined);
+		Game.GDXVars().hudBatch.setProjectionMatrix(cam.combined);
 
 		// B2D camera
 		b2dCam = new OrthographicCamera();

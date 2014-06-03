@@ -1,0 +1,109 @@
+shana_atlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bump
+  rotate: false
+  xy: 4, 4
+  size: 63, 56
+  orig: 63, 56
+  offset: 0, 0
+  index: 1
+bump
+  rotate: false
+  xy: 71, 4
+  size: 58, 51
+  orig: 58, 51
+  offset: 0, 0
+  index: 2
+bump
+  rotate: false
+  xy: 133, 4
+  size: 71, 26
+  orig: 71, 26
+  offset: 0, 0
+  index: 3
+fall
+  rotate: false
+  xy: 4, 64
+  size: 58, 67
+  orig: 58, 67
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 66, 64
+  size: 57, 98
+  orig: 57, 98
+  offset: 0, 0
+  index: 2
+jump
+  rotate: false
+  xy: 127, 64
+  size: 63, 100
+  orig: 63, 100
+  offset: 0, 0
+  index: 3
+fall
+  rotate: false
+  xy: 4, 168
+  size: 74, 68
+  orig: 74, 68
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 82, 168
+  size: 60, 51
+  orig: 60, 51
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 146, 168
+  size: 62, 50
+  orig: 62, 50
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 4, 240
+  size: 63, 49
+  orig: 63, 49
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 71, 240
+  size: 63, 50
+  orig: 63, 50
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 138, 240
+  size: 60, 50
+  orig: 60, 50
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 4, 294
+  size: 61, 50
+  orig: 61, 50
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 69, 294
+  size: 59, 50
+  orig: 59, 50
+  offset: 0, 0
+  index: 7
+run
+  rotate: false
+  xy: 132, 294
+  size: 59, 50
+  orig: 59, 50
+  offset: 0, 0
+  index: 8

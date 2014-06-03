@@ -1,11 +1,10 @@
 package com.mangarush.ui.actors;
 
-import static com.mangarush.utils.GDXVars.getMapTileTexture;
-
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mangarush.core.RandomMap;
 import com.mangarush.core.RandomMap.MapConstants;
+import com.mangarush.ui.Game;
 import com.mangarush.ui.actions.CleanWorldRunnable;
 
 public class RandomMapActor extends com.badlogic.gdx.scenes.scene2d.Actor {
@@ -41,7 +40,7 @@ public class RandomMapActor extends com.badlogic.gdx.scenes.scene2d.Actor {
 			for (int j = 0; j < viewportHeight; j++) {
 				short id = map.getMap(i, j);
 				if (id != MapConstants.EMPTY) {
-					batch.draw(getMapTileTexture(id), i * tileSize, j * tileSize);
+					batch.draw(Game.GDXVars().getMapTileTexture(id), i * tileSize, j * tileSize);
 				}
 			}
 		}

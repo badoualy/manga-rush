@@ -1,8 +1,8 @@
 package com.mangarush.ui.stages;
 
-import static com.mangarush.utils.B2DVars.PPM;
 import static com.mangarush.ui.Game.V_HEIGHT;
 import static com.mangarush.ui.Game.V_WIDTH;
+import static com.mangarush.utils.B2DVars.PPM;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -26,7 +26,6 @@ import com.mangarush.ui.actors.Player;
 import com.mangarush.ui.graphics.BoundedCamera;
 import com.mangarush.ui.handlers.MRContactListener;
 import com.mangarush.utils.B2DVars;
-import com.mangarush.utils.GDXVars;
 
 public class LevelStage extends Stage {
 	private TiledMap tiledMap;
@@ -71,7 +70,7 @@ public class LevelStage extends Stage {
 		getViewport().setCamera(cam); // Set stage default camera
 
 		// Use first position to set HUD's batch projection : entire screen
-		GDXVars.hudBatch.setProjectionMatrix(cam.combined);
+		Game.GDXVars().hudBatch.setProjectionMatrix(cam.combined);
 
 		// B2D camera
 		b2dCam = new BoundedCamera();

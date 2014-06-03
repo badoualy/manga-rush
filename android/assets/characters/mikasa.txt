@@ -1,0 +1,116 @@
+mikasa_atlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bump
+  rotate: false
+  xy: 44, 4
+  size: 33, 61
+  orig: 33, 61
+  offset: 0, 0
+  index: 1
+bump
+  rotate: false
+  xy: 44, 69
+  size: 37, 60
+  orig: 37, 60
+  offset: 0, 0
+  index: 2
+bump
+  rotate: false
+  xy: 4, 216
+  size: 58, 31
+  orig: 58, 31
+  offset: 0, 0
+  index: 3
+bump
+  rotate: false
+  xy: 66, 216
+  size: 61, 19
+  orig: 61, 19
+  offset: 0, 0
+  index: 4
+fall
+  rotate: false
+  xy: 4, 75
+  size: 36, 67
+  orig: 36, 67
+  offset: 0, 0
+  index: 1
+fall
+  rotate: false
+  xy: 4, 4
+  size: 36, 67
+  orig: 36, 67
+  offset: 0, 0
+  index: 2
+jump
+  rotate: false
+  xy: 42, 146
+  size: 34, 66
+  orig: 34, 66
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 4, 146
+  size: 34, 66
+  orig: 34, 66
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 81, 4
+  size: 40, 56
+  orig: 40, 56
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 85, 64
+  size: 37, 55
+  orig: 37, 55
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 126, 63
+  size: 30, 54
+  orig: 30, 54
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 170, 4
+  size: 34, 52
+  orig: 34, 52
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 119, 123
+  size: 38, 54
+  orig: 38, 54
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 80, 133
+  size: 35, 56
+  orig: 35, 56
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 125, 4
+  size: 31, 55
+  orig: 31, 55
+  offset: 0, 0
+  index: 7
+run
+  rotate: false
+  xy: 131, 181
+  size: 35, 53
+  orig: 35, 53
+  offset: 0, 0
+  index: 8

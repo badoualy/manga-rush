@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mangarush.ui.Game;
 import com.mangarush.utils.B2DVars;
-import com.mangarush.utils.GDXVars;
 
 /** Player actor to use in stage */
 public class Player extends Actor {
@@ -45,8 +45,8 @@ public class Player extends Actor {
 		alive = true;
 
 		// Create animations and textures
-		atlas = new TextureAtlas(GDXVars.charactersDir + "naruto.txt");
-		runAnimation = new Animation(0.12f, atlas.findRegions("run"), PlayMode.LOOP);
+		atlas = Game.GDXVars().getTextureAtlas(Game.GDXVars().charactersAtlases[2]);
+		runAnimation = new Animation(0.10f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);
 		fallAnimation = new Animation(0.15f, atlas.findRegions("fall"), PlayMode.LOOP);
 		bumpAnimation = new Animation(0.08f, atlas.findRegions("bump"));
@@ -58,7 +58,7 @@ public class Player extends Actor {
 		doubleJumped = true;
 
 		// Default bounds
-		setBounds(0, 0, runAnimation.getKeyFrame(0f).getRegionWidth(), runAnimation.getKeyFrame(0f).getRegionHeight());
+		setBounds(0, 0, 45, 50);
 	}
 
 	@Override
@@ -113,9 +113,8 @@ public class Player extends Actor {
 		}
 
 		// Give run impulse to b2d-body if we are running
-		if (state == State.RUN) {
+		if (state == State.RUN)
 			body.setLinearVelocity(B2DVars.PLAYER_MAX_SPEED, 0);
-		}
 
 		// Update jump permission
 		if (lastJump < B2DVars.JUMP_TIMEOUT)

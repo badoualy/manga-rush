@@ -8,17 +8,28 @@ import com.mangarush.utils.GDXVars;
 /** Main class, application listener, extends Game */
 public class Game extends com.badlogic.gdx.Game {
 	public static final String TITLE = "Manga Rush";
-	public static final int V_WIDTH = 800;
+	public static int V_WIDTH = 800; // Need tweak on android
 	public static final int V_HEIGHT = 480;
-	public static final float STEP = 1 / 100f;
+	public static final float STEP = 1 / 60f;
+
+	// Res manager
+	public GDXVars gdxVars;
 
 	// FPS fixer
 	private float accum;
 
 	@Override
 	public void create() {
+		// Res manager (static : bug)
+		gdxVars = new GDXVars();
+		Texture.setAssetManager(gdxVars.assetManager);
+
+		// Constants
 		accum = STEP; // So we draw at start
-		Texture.setAssetManager(GDXVars.assetManager);
+		// Adjust width to keep good ratio
+		V_WIDTH = (V_HEIGHT * Gdx.graphics.getWidth()) / Gdx.graphics.getHeight();
+
+		// Set splash screen
 		setScreen(new SplashScreen(this));
 	}
 
@@ -35,6 +46,10 @@ public class Game extends com.badlogic.gdx.Game {
 	@Override
 	public void dispose() {
 		super.dispose();
-		GDXVars.assetManager.dispose();
+		Game.GDXVars().assetManager.dispose();
+	}
+
+	public static GDXVars GDXVars() {
+		return ((Game) Gdx.app.getApplicationListener()).gdxVars;
 	}
 }

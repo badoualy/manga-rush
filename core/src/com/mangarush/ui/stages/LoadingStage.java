@@ -1,7 +1,10 @@
 package com.mangarush.ui.stages;
 
+import static com.mangarush.ui.Game.V_HEIGHT;
+import static com.mangarush.ui.Game.V_WIDTH;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actors.LoadingBar;
 import com.mangarush.ui.screens.SurvivorScreen;
-import com.mangarush.utils.GDXVars;
 
 /** A stage for loading screen */
 public class LoadingStage extends Stage {
@@ -25,12 +27,14 @@ public class LoadingStage extends Stage {
 		// Set the game
 		this.game = game;
 
+		initViewport();
+
 		// Get our textureatlas from the manager, then get assets
-		TextureAtlas atlas = GDXVars.assetManager.get("atlases/loading.pack", TextureAtlas.class);
-		font = GDXVars.assetManager.get(GDXVars.defaultFont, BitmapFont.class);
+		TextureAtlas atlas = Game.GDXVars().getTextureAtlas(Game.GDXVars().loadingPack);
+		font = Game.GDXVars().getFont(Game.GDXVars().defaultFont);
 
 		// Create actors
-		background = new Image(GDXVars.assetManager.get("backgrounds/splash.png", Texture.class));
+		background = new Image(Game.GDXVars().getTexture(Game.GDXVars().splashBackground));
 		loadingBar = new LoadingBar(atlas);
 
 		// Add actors
@@ -47,15 +51,20 @@ public class LoadingStage extends Stage {
 		startLoadingWork();
 	}
 
-	/** Start the work needed to be done */
-	private void startLoadingWork() {
-		GDXVars.loadSurvivorStageAssets();
+	/** Load cameras and set up viewport */
+	private void initViewport() {
+		getViewport().setWorldSize(V_WIDTH, V_HEIGHT);
+
+		// Default cam : don't need BoundedCamera
+		OrthographicCamera cam = new OrthographicCamera();
+		cam.setToOrtho(false, V_WIDTH, V_HEIGHT);
+		getViewport().setCamera(cam); // Set stage default camera	
 	}
 
 	@Override
 	public void draw() {
 		// Check if done
-		if (GDXVars.assetManager.update()) { // Load some, will return true if done loading
+		if (Game.GDXVars().assetManager.update()) { // Load some, will return true if done loading
 			if (Gdx.input.isTouched()) { // If the screen is touched after done loading
 				game.setScreen(new SurvivorScreen());
 				return;
@@ -73,8 +82,13 @@ public class LoadingStage extends Stage {
 
 	@Override
 	public void act(float delta) {
-		progress = GDXVars.assetManager.getProgress();
+		progress = Game.GDXVars().assetManager.getProgress();
 		loadingBar.setProgress(progress);
 		loadingBar.setMessage((progress == 1) ? "Tap to continue" : "Textures ...");
+	}
+
+	/** Start the work needed to be done */
+	private void startLoadingWork() {
+		Game.GDXVars().loadSurvivorStageAssets();
 	}
 }
