@@ -14,19 +14,19 @@ public abstract class MRVars {
 	/** Paths to the game font */
 	public static final String defaultFont = fontDir + "font_01.fnt";
 
-	/** Splash screen background */
+	/** Path to Splash screen background */
 	public static final String splashBackground = backgroundsDir + "splash.png";
 
-	/** Stage background */
+	/** Path to Stage background */
 	public static final String stageBackground = backgroundsDir + "stage_cloud.png";
 
-	/** Loading pack screen assets */
+	/** Path to Loading pack screen assets */
 	public static final String loadingPack = atlasesDir + "loading.pack";
 
-	/** Contains path to the map tiles atlas */
+	/** Path to the map tiles atlas */
 	public static final String tilesPack = atlasesDir + "tiles.pack";
 
-	/** MapChunk's .tmx files */
+	/** Path to MapChunk's .tmx files */
 	public static final String[] mapChunksTmx = {
 			mapsDir + "chunk_01.tmx",
 			mapsDir + "chunk_02.tmx",
@@ -34,11 +34,18 @@ public abstract class MRVars {
 			mapsDir + "chunk_04.tmx"
 	};
 
-	/** Characters atlases */
+	/** Path to Characters atlases */
 	public static final String[] charactersAtlases = {
 			charactersDir + "naruto.txt",
 			charactersDir + "misaka.txt",
 			charactersDir + "shana.txt"
+	};
+
+	/** Characters list */
+	public static final String[] characters = {
+			"Naruto",
+			"Misaka",
+			"Shana"
 	};
 
 	/** Map's chunks */

@@ -1,6 +1,5 @@
 package com.mangarush.ui.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mangarush.ui.Game;
+import com.mangarush.ui.actions.HighScoreAction;
 import com.mangarush.utils.B2DVars;
 import com.mangarush.utils.MRVars;
 
@@ -26,6 +28,7 @@ public class Player extends Actor {
 	// Player state
 	private State state;
 	private boolean alive;
+	private boolean highScored; // New high score ?
 
 	// Sprites and animations
 	private TextureAtlas atlas;
@@ -41,11 +44,16 @@ public class Player extends Actor {
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
 
+	// Actions
+	private Action highScoreAction;
+
 	public Player() {
 		body = null;
 
+		// Initial state
 		state = State.FALL;
 		alive = true;
+		highScored = false;
 
 		// Create animations and textures
 		atlas = Game.GDXVars().getTextureAtlas(MRVars.charactersAtlases[1]);
@@ -62,13 +70,14 @@ public class Player extends Actor {
 
 		// Default bounds
 		setBounds(0, 0, 45, 50);
+
+		// Will check until highscore then stop
+		highScoreAction = Actions.forever(new HighScoreAction(this));
+		addAction(highScoreAction);
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		// Update animation stateTime
-		stateTime += Gdx.graphics.getDeltaTime();
-
 		// Get frame to draw
 		TextureRegion currFrame;
 		switch (state) {
@@ -94,6 +103,26 @@ public class Player extends Actor {
 
 	@Override
 	public void act(float delta) {
+		// Update animation stateTime
+		stateTime += delta;
+
+		// Update state
+		updateState();
+
+		// Give run impulse to b2d-body if we are running
+		if (state == State.RUN)
+			body.setLinearVelocity(B2DVars.PLAYER_MAX_SPEED, 0);
+
+		// Update jump permission
+		if (lastJump < B2DVars.JUMP_TIMEOUT)
+			lastJump += delta;
+
+		// Call added actions
+		super.act(delta);
+	}
+
+	/** Update player state */
+	private void updateState() {
 		// Update player state
 		if (state == State.LANDED) {
 			// Landed : showed LAND frame, now we run
@@ -113,15 +142,11 @@ public class Player extends Actor {
 			// Running and not on ground means falling
 			state = State.FALL;
 			stateTime = 0f;
+		} else if (getY() < -getHeight()) { // Under map
+			body.setLinearVelocity(0, 0);
+			state = State.DEAD;
+			alive = false;
 		}
-
-		// Give run impulse to b2d-body if we are running
-		if (state == State.RUN)
-			body.setLinearVelocity(B2DVars.PLAYER_MAX_SPEED, 0);
-
-		// Update jump permission
-		if (lastJump < B2DVars.JUMP_TIMEOUT)
-			lastJump += delta;
 	}
 
 	/** Start a jump */
@@ -208,5 +233,24 @@ public class Player extends Actor {
 
 	public Fixture getFloorFix() {
 		return floorFix;
+	}
+
+	/** Return current score : position in B2DWorld */
+	public int getScore() {
+		return (int) body.getPosition().x;
+	}
+
+	public boolean hasHighScored() {
+		return highScored;
+	}
+
+	/** Call this to notify when player has a new highscore */
+	public void highScored() {
+		highScored = true;
+		removeAction(highScoreAction);
+	}
+
+	public Vector2 getLinearVelocity() {
+		return body.getLinearVelocity();
 	}
 }

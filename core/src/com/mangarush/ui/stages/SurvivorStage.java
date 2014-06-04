@@ -23,12 +23,13 @@ import com.mangarush.ui.graphics.Background;
 import com.mangarush.ui.handlers.MRContactListener;
 import com.mangarush.utils.B2DVars;
 import com.mangarush.utils.MRVars;
+import com.mangarush.utils.SaveData;
 
 /** Survivor stage : continue until player lose */
 public class SurvivorStage extends Stage {
 	// Constants
 	private final int tileSize = 32;
-	private final float backgroundSpeed = 1 / 2f; // Background speed (relative to platform speed)
+	private final float backgroundSpeed = 1f / 2f; // Background speed (relative to platform speed)
 	private final float timeBeforeStart = 0.75f; // Time in seconds before player starts falling
 
 	// Map
@@ -51,6 +52,7 @@ public class SurvivorStage extends Stage {
 	private Background background;
 
 	// Some useful values
+	private boolean over; // Game is over
 	private float elapsedTime; // Time elapsed since start
 	private float camCenterX; // Center of screen in cam coordinates
 
@@ -62,7 +64,8 @@ public class SurvivorStage extends Stage {
 		initB2DWorld(); // B2D world
 		initMap(); // Initialise map
 
-		elapsedTime = 0;
+		over = false;
+		elapsedTime = 0f;
 	}
 
 	/** Load cameras and set up viewport */
@@ -174,15 +177,15 @@ public class SurvivorStage extends Stage {
 		}
 
 		// Update B2D world
-		world.step(Game.STEP, 6, 2);
+		world.step(Game.FIXED_FPS, 6, 2);
 	}
 
 	@Override
 	public void draw() {
 		// Update cam position (+ fix position)
 		if (player.getCenterX() > cam.viewportWidth / 2f) {
-			// We can start moving camera
-			cam.position.x = player.getCenterX();
+			// We can start moving camera : to int to smooth
+			cam.position.x = (int) player.getCenterX();
 			cam.update();
 		}
 		// Set current position in map (to avoid useless draws
@@ -212,12 +215,17 @@ public class SurvivorStage extends Stage {
 		if (elapsedTime < timeBeforeStart)
 			return;
 
-		update(delta); // Update game -> new step : execute before others (better than addAction)
+		// No need to update b2d world after it's over
+		if (!over) {
+			update(delta); // Update game -> new step : execute before others (better than addAction)
+		}
 
-		// If player lost, we continue printing, but not acting
-		// Means we update screen for position only
-		if (player.isAlive())
-			super.act(delta);
+		// If player lost, we continue acting because HUD may not be done
+		super.act(delta);
+
+		// We wait for the player to fall under map or on the ground to end
+		if (over == player.isAlive() && player.getLinearVelocity().y == 0)
+			endGame();
 	}
 
 	@Override
@@ -229,6 +237,16 @@ public class SurvivorStage extends Stage {
 
 		// So it's recreated
 		B2DVars.floorBody = null;
+	}
+
+	public void endGame() {
+		over = true;
+		// Update save file
+		SaveData save = Game.Save();
+		save.timeSpend += elapsedTime; // Update timespend playing
+		if (player.hasHighScored()) { // New high score
+			save.highScore = player.getScore();
+		}
 	}
 
 	public Player getPlayer() {

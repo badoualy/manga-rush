@@ -1,27 +1,17 @@
 package com.mangarush.ui.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
 import com.mangarush.ui.handlers.MRGestureListener;
 import com.mangarush.ui.stages.SurvivorStage;
 
 /** Screen for a SurvivorStage mode */
-public class SurvivorScreen extends ScreenAdapter {
+public class SurvivorScreen extends FixedFpsScreen {
 	private SurvivorStage stage;
 
 	public SurvivorScreen() {
-		stage = new SurvivorStage();
-	}
-
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0.71f, 0.90f, 0.91f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		stage.act(); // Update
-		stage.draw(); // Dessine
+		super(new SurvivorStage());
+		stage = (SurvivorStage) super.stage;
 	}
 
 	@Override
@@ -31,7 +21,6 @@ public class SurvivorScreen extends ScreenAdapter {
 
 	@Override
 	public void hide() {
-		Gdx.input.setInputProcessor(null);
-		stage.dispose();
+		dispose();
 	}
 }
