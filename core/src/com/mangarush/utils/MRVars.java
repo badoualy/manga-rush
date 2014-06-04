@@ -1,19 +1,55 @@
 package com.mangarush.utils;
 
-import com.mangarush.core.MapChunk;
-import com.mangarush.ui.Game;
+import com.mangarush.map.MapChunk;
 
 /** Bunch of constants core-related */
-public class MRVars {
+public abstract class MRVars {
+	/** Path to directories */
+	public static final String atlasesDir = "atlases/";
+	public static final String backgroundsDir = "backgrounds/";
+	public static final String charactersDir = "characters/";
+	public static final String fontDir = "fonts/";
+	public static final String mapsDir = "maps/";
+
+	/** Paths to the game font */
+	public static final String defaultFont = fontDir + "font_01.fnt";
+
+	/** Splash screen background */
+	public static final String splashBackground = backgroundsDir + "splash.png";
+
+	/** Stage background */
+	public static final String stageBackground = backgroundsDir + "stage_cloud.png";
+
+	/** Loading pack screen assets */
+	public static final String loadingPack = atlasesDir + "loading.pack";
+
+	/** Contains path to the map tiles atlas */
+	public static final String tilesPack = atlasesDir + "tiles.pack";
+
+	/** MapChunk's .tmx files */
+	public static final String[] mapChunksTmx = {
+			mapsDir + "chunk_01.tmx",
+			mapsDir + "chunk_02.tmx",
+			mapsDir + "chunk_03.tmx",
+			mapsDir + "chunk_04.tmx"
+	};
+
+	/** Characters atlases */
+	public static final String[] charactersAtlases = {
+			charactersDir + "naruto.txt",
+			charactersDir + "misaka.txt",
+			charactersDir + "shana.txt"
+	};
+
 	/** Map's chunks */
-	private static MapChunk[] chunks = null;
+	public static MapChunk[] chunks = null;
 
 	/** Instanciate chunks if needed and return it */
 	public static MapChunk[] getChunks() {
 		if (chunks == null) {
 			// First call : instanciate
 			// Get all chunks' filepath
-			String[] chunksPath = Game.GDXVars().mapChunksTmx;
+			String[] chunksPath = mapChunksTmx;
 
 			// Instanciate chunks
 			chunks = new MapChunk[chunksPath.length];

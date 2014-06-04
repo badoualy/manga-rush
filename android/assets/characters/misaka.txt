@@ -1,4 +1,4 @@
-mikasa_atlas.png
+misaka_atlas.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none

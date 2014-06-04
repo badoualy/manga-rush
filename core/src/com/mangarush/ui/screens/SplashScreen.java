@@ -10,7 +10,7 @@ import com.mangarush.ui.stages.LoadingStage;
 public class SplashScreen extends ScreenAdapter {
 	private LoadingStage stage;
 
-	public SplashScreen(Game game) {
+	public SplashScreen() {
 		// Load assets needed for the stage
 		Game.GDXVars().loadSplashAssets();
 
@@ -18,7 +18,7 @@ public class SplashScreen extends ScreenAdapter {
 		Game.GDXVars().assetManager.finishLoading();
 
 		// Initialize the stage where we will place everything
-		stage = new LoadingStage(game);
+		stage = new LoadingStage((Game) Gdx.app.getApplicationListener());
 	}
 
 	@Override

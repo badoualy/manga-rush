@@ -32,6 +32,6 @@ public abstract class B2DVars {
 
 	/** Floor body */
 	public static Body floorBody = null;
-	/** List containing fixtures to remove from world : TAKE A LOCK ON floorBody */
-	public static final List<Fixture> fixToRemove = new ArrayList<Fixture>(15);
+	/** List containing fixtures */
+	public static List<Fixture> fixtures = new ArrayList<Fixture>(60);
 }

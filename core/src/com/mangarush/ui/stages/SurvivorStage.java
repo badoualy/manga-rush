@@ -5,6 +5,8 @@ import static com.mangarush.ui.Game.V_WIDTH;
 import static com.mangarush.utils.B2DVars.PPM;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,33 +18,51 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actors.HUD;
 import com.mangarush.ui.actors.Player;
-import com.mangarush.ui.actors.RandomMapActor;
+import com.mangarush.ui.actors.RandomMapRenderer;
+import com.mangarush.ui.graphics.Background;
 import com.mangarush.ui.handlers.MRContactListener;
 import com.mangarush.utils.B2DVars;
+import com.mangarush.utils.MRVars;
 
 /** Survivor stage : continue until player lose */
 public class SurvivorStage extends Stage {
-	// Map
-	private RandomMapActor map;
+	// Constants
 	private final int tileSize = 32;
+	private final float backgroundSpeed = 1 / 2f; // Background speed (relative to platform speed)
+	private final float timeBeforeStart = 0.75f; // Time in seconds before player starts falling
+
+	// Map
+	private RandomMapRenderer map;
 
 	// B2D
 	private World world;
 
 	// Cameras
-	private OrthographicCamera b2dCam;
 	private OrthographicCamera cam; // Useful to have a direct reference
+	//private OrthographicCamera b2dCam; // B2D World coordinates camera
 
-	// Actors
+	// Sprite Batchs
+	private Batch batch; // Useful to have a direct reference
+	private Batch hudBatch; // HUD batch (static position on screen)
+
+	// Actors and graphics
 	private Player player;
 	private HUD hud;
+	private Background background;
+
+	// Some useful values
+	private float elapsedTime; // Time elapsed since start
+	private float camCenterX; // Center of screen in cam coordinates
 
 	public SurvivorStage() {
 		super();
+
 		initViewport(); // Worldsize, cameras
 		initActors(); // Stage content (actors)
 		initB2DWorld(); // B2D world
 		initMap(); // Initialise map
+
+		elapsedTime = 0;
 	}
 
 	/** Load cameras and set up viewport */
@@ -53,13 +73,18 @@ public class SurvivorStage extends Stage {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		getViewport().setCamera(cam); // Set stage default camera
+		camCenterX = cam.viewportWidth / 2f;
+
+		// Get default batch
+		batch = getBatch();
 
 		// Use first position to set HUD's batch projection : entire screen
-		Game.GDXVars().hudBatch.setProjectionMatrix(cam.combined);
+		hudBatch = new SpriteBatch();
+		hudBatch.setProjectionMatrix(cam.combined);
 
 		// B2D camera
-		b2dCam = new OrthographicCamera();
-		b2dCam.setToOrtho(false, V_WIDTH / PPM, V_HEIGHT / PPM);
+		//b2dCam = new OrthographicCamera();
+		//b2dCam.setToOrtho(false, V_WIDTH / PPM, V_HEIGHT / PPM);
 	}
 
 	/** Init stage's actors (HUD, players, ...) */
@@ -68,8 +93,11 @@ public class SurvivorStage extends Stage {
 		player = new Player();
 
 		// HUD (bounds = screen)
-		hud = new HUD(player);
+		hud = new HUD(player, hudBatch);
 		hud.setBounds(0, 0, V_WIDTH, V_HEIGHT);
+
+		// Backgorund
+		background = new Background(Game.GDXVars().getTexture(MRVars.stageBackground), hudBatch);
 
 		// Add actors in right order
 		addActor(hud);
@@ -94,7 +122,7 @@ public class SurvivorStage extends Stage {
 		// Player body (first position : top-left corner)
 		float pWidth = player.getWidth();
 		float pHeight = player.getHeight();
-		bdef.position.set(pWidth / 2f / PPM, (V_HEIGHT - pHeight / 2) / PPM);
+		bdef.position.set(pWidth / 2f / PPM, (V_HEIGHT - pHeight) / PPM);
 		bdef.type = BodyType.DynamicBody; // To dynamic
 		bdef.fixedRotation = true;
 		body = world.createBody(bdef);
@@ -127,20 +155,21 @@ public class SurvivorStage extends Stage {
 
 	private void initMap() {
 		// Map
-		map = new RandomMapActor(world, V_WIDTH / tileSize, V_HEIGHT / tileSize, tileSize);
+		map = new RandomMapRenderer(world, V_WIDTH / tileSize, V_HEIGHT / tileSize, tileSize);
 
+		// Add to the back (behind all other actors)
 		addActor(map);
 		map.toBack();
 	}
 
 	/** Gamestep */
 	private void update(float delta) {
-		// Check if bodies to remove
-		if (!B2DVars.fixToRemove.isEmpty()) {
-			synchronized (B2DVars.floorBody) {
-				// Remove from world
-				for (int i = 0; i < B2DVars.fixToRemove.size();)
-					B2DVars.floorBody.destroyFixture(B2DVars.fixToRemove.get(i));
+		// Check to remove old fixtures
+		if (player.isOnGround()) {
+			// First fixture should be the one player is on right now
+			while (B2DVars.fixtures.get(0) != player.getFloorFix()) {
+				B2DVars.floorBody.destroyFixture(B2DVars.fixtures.get(0));
+				B2DVars.fixtures.remove(0);
 			}
 		}
 
@@ -150,22 +179,39 @@ public class SurvivorStage extends Stage {
 
 	@Override
 	public void draw() {
-		// Update default cam position (+ fix position)
-		cam.position.x = Math.max(player.getCenterX(), cam.viewportWidth / 2);
-		cam.update();
-		map.setPosition(cam.position.x - cam.viewportWidth / 2);
-		getBatch().setProjectionMatrix(cam.combined);
+		// Update cam position (+ fix position)
+		if (player.getCenterX() > cam.viewportWidth / 2f) {
+			// We can start moving camera
+			cam.position.x = player.getCenterX();
+			cam.update();
+		}
+		// Set current position in map (to avoid useless draws
+		map.setPosition(cam.position.x - camCenterX);
+		// Update batch projection matrix
+		batch.setProjectionMatrix(cam.combined);
 
 		// Update Box2D camera position (+ fix position)
-		b2dCam.position.x = Math.max(player.getCenterX() / PPM, b2dCam.viewportWidth / 2);
-		b2dCam.update();
+		//b2dCam.position.x = Math.max(player.getCenterX() / PPM, b2dCam.viewportWidth / 2);
+		//b2dCam.update();
+
+		// Draw background : fill screen
+		background.draw(hudBatch, cam.position.x * backgroundSpeed, 0, V_WIDTH, V_HEIGHT);
 
 		// Draw actors
-		super.draw();
+		/* Instead of calling super.draw() which would set a second time
+		 * camera's position and bach projection matrix, copy the useful
+		 * content of super.draw() */
+		batch.begin();
+		getRoot().draw(batch, 1);
+		batch.end();
 	}
 
 	@Override
 	public void act(float delta) {
+		elapsedTime += delta;
+		if (elapsedTime < timeBeforeStart)
+			return;
+
 		update(delta); // Update game -> new step : execute before others (better than addAction)
 
 		// If player lost, we continue printing, but not acting
@@ -176,8 +222,13 @@ public class SurvivorStage extends Stage {
 
 	@Override
 	public void dispose() {
+		// batch is disposed in super.dipose()
 		super.dispose();
 		world.dispose();
+		hudBatch.dispose();
+
+		// So it's recreated
+		B2DVars.floorBody = null;
 	}
 
 	public Player getPlayer() {

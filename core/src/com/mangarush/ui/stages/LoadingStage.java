@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actors.LoadingBar;
 import com.mangarush.ui.screens.SurvivorScreen;
+import com.mangarush.utils.MRVars;
 
 /** A stage for loading screen */
 public class LoadingStage extends Stage {
@@ -30,11 +31,11 @@ public class LoadingStage extends Stage {
 		initViewport();
 
 		// Get our textureatlas from the manager, then get assets
-		TextureAtlas atlas = Game.GDXVars().getTextureAtlas(Game.GDXVars().loadingPack);
-		font = Game.GDXVars().getFont(Game.GDXVars().defaultFont);
+		TextureAtlas atlas = Game.GDXVars().getTextureAtlas(MRVars.loadingPack);
+		font = Game.GDXVars().getFont(MRVars.defaultFont);
 
 		// Create actors
-		background = new Image(Game.GDXVars().getTexture(Game.GDXVars().splashBackground));
+		background = new Image(Game.GDXVars().getTexture(MRVars.splashBackground));
 		loadingBar = new LoadingBar(atlas);
 
 		// Add actors

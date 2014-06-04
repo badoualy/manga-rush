@@ -17,7 +17,7 @@ public class SurvivorScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.81f, 0.96f, 0.97f, 1f);
+		Gdx.gl.glClearColor(0.71f, 0.90f, 0.91f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		stage.act(); // Update
@@ -32,5 +32,6 @@ public class SurvivorScreen extends ScreenAdapter {
 	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
+		stage.dispose();
 	}
 }

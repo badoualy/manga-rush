@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mangarush.ui.Game;
 import com.mangarush.utils.B2DVars;
+import com.mangarush.utils.MRVars;
 
 /** Player actor to use in stage */
 public class Player extends Actor {
@@ -34,6 +36,7 @@ public class Player extends Actor {
 	private float stateTime;
 
 	// Utils
+	private Fixture floorFix; // Current floor fixture
 	private int groundContacts;
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
@@ -45,7 +48,7 @@ public class Player extends Actor {
 		alive = true;
 
 		// Create animations and textures
-		atlas = Game.GDXVars().getTextureAtlas(Game.GDXVars().charactersAtlases[2]);
+		atlas = Game.GDXVars().getTextureAtlas(MRVars.charactersAtlases[1]);
 		runAnimation = new Animation(0.10f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);
 		fallAnimation = new Animation(0.15f, atlas.findRegions("fall"), PlayMode.LOOP);
@@ -185,12 +188,14 @@ public class Player extends Actor {
 		this.body = body;
 	}
 
-	public void touchedGround() {
+	public void touchedGround(Fixture floorFix) {
 		groundContacts++;
+		this.floorFix = floorFix;
 	}
 
 	public void leftGround() {
 		groundContacts--;
+		this.floorFix = null;
 	}
 
 	public boolean isAlive() {
@@ -199,5 +204,9 @@ public class Player extends Actor {
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+
+	public Fixture getFloorFix() {
+		return floorFix;
 	}
 }

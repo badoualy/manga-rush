@@ -1,6 +1,4 @@
-package com.mangarush.core;
-
-import static com.mangarush.utils.B2DVars.floorBody;
+package com.mangarush.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mangarush.core.RandomMap.MapConstants;
+import com.mangarush.map.RandomMap.MapConstants;
 import com.mangarush.utils.B2DVars;
 
 /** A chunk of map used for map generation, fixed size */
@@ -86,13 +84,13 @@ public class MapChunk {
 			return;
 
 		// First body allocation
-		if (floorBody == null) {
+		if (B2DVars.floorBody == null) {
 			BodyDef bdef = new BodyDef();
 			bdef.type = BodyType.StaticBody;
 			bdef.fixedRotation = true;
 			bdef.position.set(0, 0);
 
-			floorBody = world.createBody(bdef);
+			B2DVars.floorBody = world.createBody(bdef);
 		}
 
 		// Temp vars
@@ -112,7 +110,7 @@ public class MapChunk {
 			center.y = (originY + rect.y + rect.height / 2f) / B2DVars.PPM;
 			fdef.shape = ps = new PolygonShape();
 			ps.setAsBox(rect.width / 2f / B2DVars.PPM, rect.height / 2f / B2DVars.PPM, center, 0);
-			floorBody.createFixture(fdef);
+			B2DVars.fixtures.add(B2DVars.floorBody.createFixture(fdef));
 			ps.dispose();
 		}
 	}

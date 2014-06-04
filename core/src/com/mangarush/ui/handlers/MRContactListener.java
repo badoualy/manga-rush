@@ -31,7 +31,7 @@ public class MRContactListener implements ContactListener {
 				// Chck which sensor
 				if (fA.getUserData().equals(B2DVars.USERD_FOOT_SENSOR)) {
 					// fA is foot sensor
-					player.touchedGround();
+					player.touchedGround(fB);
 				} else if (fA.getUserData().equals(B2DVars.USERD_WALL_SENSOR)) {
 					// fA is wall sensor
 					player.hitWall();

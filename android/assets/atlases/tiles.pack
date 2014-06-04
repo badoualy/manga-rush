@@ -1,0 +1,95 @@
+tiles.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+0
+  rotate: false
+  xy: 4, 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+1
+  rotate: false
+  xy: 42, 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 80, 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 4, 42
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 42, 42
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 80, 42
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+6
+  rotate: false
+  xy: 4, 80
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+7
+  rotate: false
+  xy: 42, 80
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+8
+  rotate: false
+  xy: 80, 80
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+9
+  rotate: false
+  xy: 4, 118
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 42, 118
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 80, 118
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+13
+  rotate: false
+  xy: 4, 156
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

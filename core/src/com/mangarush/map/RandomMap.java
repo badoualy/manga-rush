@@ -1,4 +1,4 @@
-package com.mangarush.core;
+package com.mangarush.map;
 
 import java.util.Random;
 
@@ -10,7 +10,7 @@ import com.mangarush.utils.MRVars;
  * Constructor grow map automatically
  */
 public class RandomMap {
-	private static final int STORED_CHUNKS = 25; // Chunks stored
+	private static final int STORED_CHUNKS = 15; // Chunks stored
 
 	// Map-related
 	private final short[] map;
@@ -82,8 +82,9 @@ public class RandomMap {
 		public static final short GRASS_HALF_WATER_RIGHT = 9;
 		public static final short WATER_FILL = 10;
 		public static final short WATER_TOP = 11;
-		public static final short LAVA_FILL = 12;
-		public static final short LAVA_TOP = 13;
-		public static final short SIGN_RIGHT = 14;
+		public static final short SIGN_RIGHT = 12;
+
+		// Tiles type count
+		public static final short TYPE_COUNT = 13;
 	}
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mangarush.ui.Game;
 import com.mangarush.utils.B2DVars;
+import com.mangarush.utils.MRVars;
 
 /** HUD-actor : draw HUD on screen */
 public class HUD extends Actor {
@@ -13,12 +14,12 @@ public class HUD extends Actor {
 	private BitmapFont font;
 	private Batch batch;
 
-	public HUD(Player player) {
+	public HUD(Player player, Batch batch) {
 		this.player = player;
+		this.batch = batch;
 
-		// Load font and batch
-		font = Game.GDXVars().getFont(Game.GDXVars().defaultFont);
-		batch = Game.GDXVars().hudBatch;
+		// Load font
+		font = Game.GDXVars().getFont(MRVars.defaultFont);
 	}
 
 	@Override
