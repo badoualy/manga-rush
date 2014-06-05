@@ -1,0 +1,25 @@
+characters.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+naruto
+  rotate: false
+  xy: 4, 73
+  size: 43, 58
+  orig: 43, 58
+  offset: 0, 0
+  index: -1
+misaka
+  rotate: false
+  xy: 4, 4
+  size: 26, 65
+  orig: 26, 65
+  offset: 0, 0
+  index: -1
+shana
+  rotate: false
+  xy: 4, 135
+  size: 48, 60
+  orig: 48, 60
+  offset: 0, 0
+  index: -1

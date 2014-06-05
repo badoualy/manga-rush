@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mangarush.ui.Game;
 
-/** Screen with a stage that fixes FPS */
+/** Generic screen with a stage that fixes FPS */
 public class FixedFpsScreen extends ScreenAdapter {
-	protected Stage stage;
+	protected final Stage stage;
 
 	private float accumulator;
 
@@ -40,9 +40,13 @@ public class FixedFpsScreen extends ScreenAdapter {
 	}
 
 	@Override
+	public void show() {
+		Gdx.input.setInputProcessor(stage);
+	}
+
+	@Override
 	public void hide() {
 		Gdx.input.setInputProcessor(null);
-
 	}
 
 	@Override

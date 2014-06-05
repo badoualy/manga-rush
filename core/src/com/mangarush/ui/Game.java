@@ -3,7 +3,9 @@ package com.mangarush.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.mangarush.ui.screens.SplashScreen;
+import com.mangarush.ui.screens.FixedFpsScreen;
+import com.mangarush.ui.screens.SurvivorScreen;
+import com.mangarush.ui.stages.LoadingStage;
 import com.mangarush.utils.GDXVars;
 import com.mangarush.utils.SaveData;
 
@@ -21,7 +23,7 @@ public class Game extends com.badlogic.gdx.Game {
 	private SaveData save;
 
 	// Screens
-	private Screen loadingScreen;
+	private Screen mainScreen;
 
 	@Override
 	public void create() {
@@ -35,10 +37,15 @@ public class Game extends com.badlogic.gdx.Game {
 		// Adjust width to keep good ratio
 		V_WIDTH = (V_HEIGHT * Gdx.graphics.getWidth()) / Gdx.graphics.getHeight();
 
-		loadingScreen = new SplashScreen();
+		// Load assets needed for the main screen and wait until it's over
+		Game.GDXVars().loadSplashAssets();
+		Game.GDXVars().assetManager.finishLoading();
 
-		// Set splash screen
-		setScreen(loadingScreen);
+		// Create main screen
+		mainScreen = new FixedFpsScreen(new LoadingStage());
+
+		// MainScreen
+		showMainScreen();
 	}
 
 	@Override
@@ -46,6 +53,16 @@ public class Game extends com.badlogic.gdx.Game {
 		super.dispose();
 		Game.GDXVars().assetManager.dispose();
 		save.save();
+	}
+
+	/** Back to the main screen */
+	public static void showMainScreen() {
+		((Game) Gdx.app.getApplicationListener()).setScreen(((Game) Gdx.app.getApplicationListener()).mainScreen);
+	}
+
+	/** Starts a new survivor game with the given character */
+	public static void startSurvivorGame(int characterId) {
+		((Game) Gdx.app.getApplicationListener()).setScreen(new SurvivorScreen(characterId));
 	}
 
 	/** Return current instance of GDXVars */

@@ -13,8 +13,10 @@ public class MRGestureListener extends GestureAdapter {
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
-		if (player.canJump() && player.isAlive())
+		if (player.canJump() && player.isAlive()) {
 			player.jump();
-		return true;
+			return true;
+		}
+		return false;
 	}
 }

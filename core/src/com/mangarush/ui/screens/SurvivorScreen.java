@@ -1,6 +1,7 @@
 package com.mangarush.ui.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.mangarush.ui.handlers.MRGestureListener;
 import com.mangarush.ui.stages.SurvivorStage;
@@ -9,18 +10,22 @@ import com.mangarush.ui.stages.SurvivorStage;
 public class SurvivorScreen extends FixedFpsScreen {
 	private SurvivorStage stage;
 
-	public SurvivorScreen() {
-		super(new SurvivorStage());
+	public SurvivorScreen(int character) {
+		super(new SurvivorStage(character));
 		stage = (SurvivorStage) super.stage;
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(new GestureDetector(new MRGestureListener(stage.getPlayer())));
+		InputMultiplexer im = new InputMultiplexer();
+		im.addProcessor(stage);
+		im.addProcessor(new GestureDetector(new MRGestureListener(stage.getPlayer())));
+		Gdx.input.setInputProcessor(im);
 	}
 
 	@Override
 	public void hide() {
+		super.hide();
 		dispose();
 	}
 }

@@ -32,10 +32,10 @@ public class Player extends Actor {
 
 	// Sprites and animations
 	private TextureAtlas atlas;
+	private final int characterId;
 	private Animation runAnimation;
 	private Animation jumpAnimation;
 	private Animation fallAnimation;
-	private Animation bumpAnimation;
 	private float stateTime;
 
 	// Utils
@@ -47,7 +47,7 @@ public class Player extends Actor {
 	// Actions
 	private Action highScoreAction;
 
-	public Player() {
+	public Player(int characterId) {
 		body = null;
 
 		// Initial state
@@ -56,11 +56,11 @@ public class Player extends Actor {
 		highScored = false;
 
 		// Create animations and textures
-		atlas = Game.GDXVars().getTextureAtlas(MRVars.charactersAtlases[1]);
+		atlas = Game.GDXVars().getTextureAtlas(MRVars.charactersAtlases[characterId]);
+		this.characterId = characterId;
 		runAnimation = new Animation(0.10f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);
 		fallAnimation = new Animation(0.15f, atlas.findRegions("fall"), PlayMode.LOOP);
-		bumpAnimation = new Animation(0.08f, atlas.findRegions("bump"));
 		stateTime = 0f;
 
 		// In the air and can't jump
@@ -84,11 +84,9 @@ public class Player extends Actor {
 			case JUMP:
 				currFrame = jumpAnimation.getKeyFrame(stateTime);
 				break;
+			case DEAD: // Not in sight
 			case FALL:
 				currFrame = fallAnimation.getKeyFrame(stateTime);
-				break;
-			case DEAD:
-				currFrame = bumpAnimation.getKeyFrame(stateTime);
 				break;
 			case LANDED:
 			case RUN:
@@ -132,7 +130,7 @@ public class Player extends Actor {
 			// Jumping and vy < 0 means falling
 			state = State.FALL;
 			stateTime = 0f;
-		} else if (state == State.FALL && isOnGround()) { // Falling and hit ground
+		} else if (state == State.FALL && isOnGround()) {
 			// Falling and on ground means landed
 			state = State.LANDED;
 			lastJump = 0f;
@@ -142,7 +140,8 @@ public class Player extends Actor {
 			// Running and not on ground means falling
 			state = State.FALL;
 			stateTime = 0f;
-		} else if (getY() < -getHeight()) { // Under map
+		} else if (alive && getY() < -getHeight() * 1.5f) {
+			// Player is under the map : lost : *1.5 for drawing safety
 			body.setLinearVelocity(0, 0);
 			state = State.DEAD;
 			alive = false;
@@ -163,15 +162,6 @@ public class Player extends Actor {
 		}
 
 		state = State.JUMP;
-		stateTime = 0f;
-	}
-
-	/** Player just hit a wall : lost */
-	public void hitWall() {
-		alive = false;
-		state = State.DEAD;
-		// Remove all velocity
-		body.setLinearVelocity(0, 0);
 		stateTime = 0f;
 	}
 
@@ -240,6 +230,7 @@ public class Player extends Actor {
 		return (int) body.getPosition().x;
 	}
 
+	/** Return true if player beat his highscore this game */
 	public boolean hasHighScored() {
 		return highScored;
 	}
@@ -252,5 +243,9 @@ public class Player extends Actor {
 
 	public Vector2 getLinearVelocity() {
 		return body.getLinearVelocity();
+	}
+
+	public int getCharacterId() {
+		return characterId;
 	}
 }

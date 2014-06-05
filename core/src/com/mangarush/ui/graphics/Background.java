@@ -5,24 +5,30 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 
-/** An actor that draw a background scrolling and repeating itself */
+/**
+ * An actor that draw a background scrolling and repeating itself. This class is
+ * simpler than using Image or other actors. We just want to draw a texture with
+ * an offset
+ */
 public class Background extends BaseDrawable {
-	private Texture texture;
-	private Batch batch;
+	private final Texture texture;
+	private float x, y;
 
-	public Background(Texture texture, Batch batch) {
+	public Background(Texture texture) {
 		this.texture = texture;
 		texture.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);
 
-		// Use custom batch
-		this.batch = batch;
+		x = y = 0f;
 	}
 
 	@Override
-	public void draw(Batch uBatch, float x, float y, float width, float height) {
+	public void draw(Batch batch, float originX, float originY, float width, float height) {
 		// Call this method with null batch
-		batch.begin();
-		batch.draw(texture, 0f, 0f, (int) x, (int) y, (int) width, (int) height);
-		batch.end();
+		batch.draw(texture, x, y, (int) originX, (int) originY, (int) width, (int) height);
+	}
+
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
 	}
 }

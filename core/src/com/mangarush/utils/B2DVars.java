@@ -12,7 +12,7 @@ public abstract class B2DVars {
 	/** PPM px = 1 meter **/
 	public static final float PPM = 50f;
 
-	/** Gravity */
+	/** Gravity vector */
 	public static final Vector2 GRAVITY = new Vector2(0, -9.81f);
 
 	/** Masks for collision handling (bitmask) */
@@ -21,17 +21,17 @@ public abstract class B2DVars {
 
 	/** User data to identify fixtures */
 	public static final String USERD_FOOT_SENSOR = "foot_sensor";
-	public static final String USERD_WALL_SENSOR = "wall_sensor";
+	//public static final String USERD_WALL_SENSOR = "wall_sensor";
 
-	/** Player max speed : impulse to apply */
+	/** Player max velocity (x-axis) : run force */
 	public static final float PLAYER_MAX_SPEED = 225f / PPM;
-	/** Player jump force : impulse to apply */
+	/** Player jump force (y-axis velocity) */
 	public static final float JUMP_FORCE = 200f / PPM;
-	/** Player jump timeout in seconds */
+	/** Player jump timeout in seconds (time before a new jump) */
 	public static final float JUMP_TIMEOUT = 0f;
 
 	/** Floor body */
 	public static Body floorBody = null;
 	/** List containing fixtures */
-	public static List<Fixture> fixtures = new ArrayList<Fixture>(60);
+	public static List<Fixture> floorFixtures = new ArrayList<Fixture>(60);
 }

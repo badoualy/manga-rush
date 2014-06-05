@@ -1,0 +1,18 @@
+ui.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+menuButton
+  rotate: false
+  xy: 4, 4
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+replayButton
+  rotate: false
+  xy: 4, 56
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1

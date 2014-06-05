@@ -20,8 +20,14 @@ public abstract class MRVars {
 	/** Path to Stage background */
 	public static final String stageBackground = backgroundsDir + "stage_cloud.png";
 
-	/** Path to Loading pack screen assets */
+	/** Path to UI pack assets */
+	public static final String uiPack = atlasesDir + "ui.pack";
+
+	/** Path to Loading pack */
 	public static final String loadingPack = atlasesDir + "loading.pack";
+
+	/** Path to characters pack */
+	public static final String charactersPack = atlasesDir + "characters.pack";
 
 	/** Path to the map tiles atlas */
 	public static final String tilesPack = atlasesDir + "tiles.pack";

@@ -10,11 +10,11 @@ import com.mangarush.utils.MRVars;
  * Constructor grow map automatically
  */
 public class RandomMap {
-	private static final int STORED_CHUNKS = 15; // Chunks stored
+	private static final int STORED_CHUNKS = 15; // Chunks stored 
 
 	// Map-related
 	private final short[] map;
-	private int currChunk; // Current chunk
+	private int currChunk; // Index of the first currently used chunk
 	private int end; // Last chunk generated
 
 	// Chunks available

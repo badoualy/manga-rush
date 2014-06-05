@@ -26,7 +26,9 @@ public class GDXVars {
 	/** Load all needed assets for LoadingStage in assetManager */
 	public void loadSplashAssets() {
 		// Tell the manager to load assets for the loading screen
+		assetManager.load("atlases/ui.pack", TextureAtlas.class);
 		assetManager.load("atlases/loading.pack", TextureAtlas.class);
+		assetManager.load("atlases/characters.pack", TextureAtlas.class);
 		assetManager.load("backgrounds/splash.png", Texture.class);
 		assetManager.load(MRVars.defaultFont, BitmapFont.class);
 	}
