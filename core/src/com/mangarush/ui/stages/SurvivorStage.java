@@ -175,7 +175,7 @@ public class SurvivorStage extends Stage {
 		}
 
 		// Update B2D world
-		world.step(Game.FIXED_FPS, 6, 2);
+		world.step(Game.FIXED_FPS, 6, 3);
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class SurvivorStage extends Stage {
 		// Update cam position (+ fix position) (test to see if we can start moving camera)
 		if (player.getCenterX() > cam.viewportWidth / 2f) {
 			// We can start moving camera : cast to int to be smoother
-			cam.position.x = (int) player.getCenterX();
+			cam.position.x = player.getCenterX();
 			cam.update();
 			// Set current position in map (to avoid useless draws
 			map.setPosition(cam.position.x - camCenterX);

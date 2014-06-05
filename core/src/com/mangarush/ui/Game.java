@@ -62,6 +62,8 @@ public class Game extends com.badlogic.gdx.Game {
 
 	/** Starts a new survivor game with the given character */
 	public static void startSurvivorGame(int characterId) {
+		// Have to do setScreen(null) because SurvivorScreen has to be created AFTER old one is disposed
+		((Game) Gdx.app.getApplicationListener()).setScreen(null);
 		((Game) Gdx.app.getApplicationListener()).setScreen(new SurvivorScreen(characterId));
 	}
 
