@@ -17,8 +17,7 @@ import com.mangarush.utils.MRVars;
 
 /** HUD-actor : draw HUD on screen */
 public class HUD extends Group {
-	private static final float HIGHSCORE_DURATION = 2f; // How long should show the message
-
+	// Datas
 	private final Player player;
 	private final BitmapFont font;
 
@@ -26,8 +25,10 @@ public class HUD extends Group {
 	private final Label scoreLabel;
 	private final ImageButton replayButton, menuButton;
 
-	private boolean showHighScored; // Show new highscore message
-	private float highScoreState; // Time elapsed
+	// Message
+	private String message; // message to show on screen
+	private float messageDuration; // How long to show message
+	private float messageState; // Time elapsed
 
 	public HUD(final Player player) {
 		this.player = player;
@@ -65,48 +66,47 @@ public class HUD extends Group {
 			}
 		});
 
-		showHighScored = false;
-		highScoreState = 0f;
+		message = "";
+		messageState = 0f;
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		// Check if need to show highscore message
-		if (showHighScored && highScoreState < HIGHSCORE_DURATION) {
-			String str = "New high score !";
-			TextBounds bounds = font.getBounds(str);
-			font.draw(batch, str, getWidth() / 2 - bounds.width / 2, getHeight() / 1.2f);
-		}
-
 		// Draw added actors
 		super.draw(batch, 1);
+
+		if (!message.isEmpty()) {
+			// We have a message to show
+			TextBounds bounds = font.getBounds(message);
+			font.draw(batch, message, getX() + getWidth() / 2f - bounds.width / 2f, getHeight() / 1.2f);
+		}
 	}
 
 	@Override
 	public void act(float delta) {
-		if (player.hasHighScored() && !showHighScored) {
-			showHighScored = true;
-		} else if (showHighScored) {
-			highScoreState += delta;
+		messageState += delta;
+		if (messageState >= messageDuration && messageDuration != MRVars.INFINITE_DURATION) {
+			// -1 means infinite
+			message = "";
 		}
 
+		// Update scoreLabel value
 		scoreLabel.setText(String.format("%04d", player.getScore()));
 	}
 
 	@Override
 	protected void sizeChanged() {
+		// Update actors position
 		scoreLabel.setPosition(getWidth() - scoreLabel.getWidth() - 5f, getHeight() - scoreLabel.getHeight() / 2f);
 		replayButton.setPosition(scoreLabel.getX() - replayButton.getWidth() - 10f,
 				getHeight() - replayButton.getHeight());
 		menuButton.setPosition(replayButton.getX() - menuButton.getWidth() - 10f, replayButton.getY());
 	}
 
-	public boolean isInReplayButton(int x, int y) {
-		if ((x >= replayButton.getX() && x <= replayButton.getX() + replayButton.getWidth())
-				&& (y >= replayButton.getY() && y <= replayButton.getY() + replayButton.getHeight())) {
-			return true;
-		}
-
-		return false;
+	/** Print a message on screen for a fixed duration (may be infinite -1) */
+	public void showMessage(String message, float duration) {
+		this.message = message;
+		messageDuration = duration;
+		messageState = 0f;
 	}
 }

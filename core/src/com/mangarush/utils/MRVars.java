@@ -4,6 +4,12 @@ import com.mangarush.map.MapChunk;
 
 /** Bunch of constants core-related */
 public abstract class MRVars {
+	/** Some HUD constants */
+	public static final float HIGHSCORE_DURATION = 2f;
+	public static final float INFINITE_DURATION = -1f;
+	public static final String HIGHSCORE_MESSAGE = "New highscore !";
+	public static final String GAMEOVER_MESSAGE = "Game Over !";
+
 	/** Path to directories */
 	public static final String atlasesDir = "atlases/";
 	public static final String backgroundsDir = "backgrounds/";

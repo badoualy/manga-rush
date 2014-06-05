@@ -13,8 +13,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mangarush.ui.Game;
+import com.mangarush.ui.actions.HighScoreAction;
 import com.mangarush.ui.actors.HUD;
 import com.mangarush.ui.actors.Player;
 import com.mangarush.ui.actors.RandomMapRenderer;
@@ -46,8 +48,12 @@ public class SurvivorStage extends Stage {
 	private HUD hud;
 	private Background background;
 
+	// Actions
+	Action highScoreAction; // Check highscore action
+
 	// Some useful values
 	private boolean over; // Game is over ?
+	private boolean highScored; // New high score ?
 	private float elapsedTime; // Time elapsed since start
 	private float camCenterX; // Center of screen in cam coordinates
 
@@ -60,6 +66,7 @@ public class SurvivorStage extends Stage {
 		initMap(); // Initialise map
 
 		over = false;
+		highScored = false;
 		elapsedTime = 0f;
 	}
 
@@ -92,6 +99,10 @@ public class SurvivorStage extends Stage {
 		// Add actors in right order
 		addActor(hud);
 		addActor(player);
+
+		// Highscore checking action : we had it to the player for more logic
+		highScoreAction = new HighScoreAction(this);
+		player.addAction(highScoreAction);
 	}
 
 	/**
@@ -226,14 +237,24 @@ public class SurvivorStage extends Stage {
 		B2DVars.floorFixtures.clear();
 	}
 
+	/** Player made a new highscore */
+	public void highScoreBeaten() {
+		highScored = true;
+		// Print message on hud
+		hud.showMessage(MRVars.HIGHSCORE_MESSAGE, MRVars.HIGHSCORE_DURATION);
+	}
+
 	/** End the current game, do some ending stuff */
 	public void endGame() {
 		over = true;
 
+		// Print gameover message
+		hud.showMessage(MRVars.GAMEOVER_MESSAGE, -1);
+
 		// Update save file
 		SaveData save = Game.Save();
 		save.timeSpend += elapsedTime; // Update timespend playing
-		if (player.hasHighScored()) { // New high score
+		if (highScored) { // New high score
 			save.highScore = player.getScore();
 		}
 		// Save now (flush)	in case the game crashes

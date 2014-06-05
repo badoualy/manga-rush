@@ -8,11 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mangarush.ui.Game;
-import com.mangarush.ui.actions.HighScoreAction;
 import com.mangarush.utils.B2DVars;
 import com.mangarush.utils.MRVars;
 
@@ -28,7 +25,6 @@ public class Player extends Actor {
 	// Player state
 	private State state;
 	private boolean alive;
-	private boolean highScored; // New high score ?
 
 	// Sprites and animations
 	private TextureAtlas atlas;
@@ -44,16 +40,12 @@ public class Player extends Actor {
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
 
-	// Actions
-	private Action highScoreAction;
-
 	public Player(int characterId) {
 		body = null;
 
 		// Initial state
 		state = State.FALL;
 		alive = true;
-		highScored = false;
 
 		// Create animations and textures
 		atlas = Game.GDXVars().getTextureAtlas(MRVars.charactersAtlases[characterId]);
@@ -70,10 +62,6 @@ public class Player extends Actor {
 
 		// Default bounds
 		setBounds(0, 0, 45, 50);
-
-		// Will check until highscore then stop
-		highScoreAction = Actions.forever(new HighScoreAction(this));
-		addAction(highScoreAction);
 	}
 
 	@Override
@@ -228,17 +216,6 @@ public class Player extends Actor {
 	/** Return current score : position in B2DWorld */
 	public int getScore() {
 		return (int) body.getPosition().x;
-	}
-
-	/** Return true if player beat his highscore this game */
-	public boolean hasHighScored() {
-		return highScored;
-	}
-
-	/** Call this to notify when player has a new highscore */
-	public void highScored() {
-		highScored = true;
-		removeAction(highScoreAction);
 	}
 
 	public Vector2 getLinearVelocity() {
