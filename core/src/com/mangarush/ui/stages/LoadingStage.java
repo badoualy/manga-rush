@@ -79,6 +79,8 @@ public class LoadingStage extends Stage {
 		progress = Game.GDXVars().assetManager.getProgress();
 		loadingBar.setProgress(progress);
 		loadingBar.setMessage((progress == 1) ? "Tap to continue" : "Textures ...");
+
+		super.act(delta);
 	}
 
 	@Override

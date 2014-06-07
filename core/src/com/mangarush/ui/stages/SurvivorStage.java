@@ -197,8 +197,10 @@ public class SurvivorStage extends Stage {
 		 * camera's position and bach projection matrix, copy the useful
 		 * content of super.draw() */
 		batch.begin();
-		// Draw background : fill screen
+		// Draw background : fill screen : disable blending : better perf
+		batch.disableBlending();
 		background.draw(batch, cam.position.x * backgroundSpeed, 0, V_WIDTH, V_HEIGHT);
+		batch.enableBlending();
 		// Draw actors
 		getRoot().draw(batch, 1);
 		batch.end();
@@ -250,6 +252,7 @@ public class SurvivorStage extends Stage {
 
 		// Print gameover message
 		hud.showMessage(MRVars.GAMEOVER_MESSAGE, -1);
+		hud.growUp();
 
 		// Update save file
 		SaveData save = Game.Save();

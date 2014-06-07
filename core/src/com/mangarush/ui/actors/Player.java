@@ -27,8 +27,8 @@ public class Player extends Actor {
 	private boolean alive;
 
 	// Sprites and animations
-	private TextureAtlas atlas;
 	private final int characterId;
+	private TextureAtlas atlas;
 	private Animation runAnimation;
 	private Animation jumpAnimation;
 	private Animation fallAnimation;
@@ -57,7 +57,7 @@ public class Player extends Actor {
 
 		// In the air and can't jump
 		groundContacts = 0;
-		lastJump = B2DVars.JUMP_TIMEOUT;
+		lastJump = 0;
 		doubleJumped = true;
 
 		// Default bounds
@@ -145,9 +145,8 @@ public class Player extends Actor {
 		// If we are on ground : first jump, else double jump
 		if (isOnGround())
 			lastJump = 0f;
-		else {
+		else
 			doubleJumped = true;
-		}
 
 		state = State.JUMP;
 		stateTime = 0f;

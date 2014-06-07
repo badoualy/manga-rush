@@ -1,10 +1,11 @@
 package com.mangarush.ui.actors;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -16,22 +17,22 @@ import com.mangarush.utils.MRVars;
  * regions
  */
 public class CharactersSelector extends Group {
-	private TextureRegion[] contents;
-	private TextureRegion selection;
+	private Image[] contents;
 	private int selectionIndex;
 	private TextButton leftButton, rightButton;
 
 	public CharactersSelector(TextureAtlas atlas) {
-		setSize(200, 20);
-
 		// Load carrousel elements
-		contents = new TextureRegion[atlas.getRegions().size];
-		for (int i = 0; i < contents.length; i++)
-			contents[i] = atlas.getRegions().get(i);
+		contents = new Image[atlas.getRegions().size];
+		for (int i = 0; i < contents.length; i++) {
+			contents[i] = new Image(atlas.getRegions().get(i));
+			addActor(contents[i]);
+			if (i != 0)
+				contents[i].setColor(contents[i].getColor().sub(0f, 0f, 0f, 1f));
+		}
 
 		// Initial selection
 		selectionIndex = 0;
-		selection = contents[0];
 
 		// Buttons
 		leftButton = new TextButton(" < ", new TextButtonStyle(null, null, null, Game.GDXVars().getFont(
@@ -43,37 +44,67 @@ public class CharactersSelector extends Group {
 		addActor(leftButton);
 		addActor(rightButton);
 
-		// Change button's position
-		leftButton.setPosition(0, 0);
-		rightButton.setPosition(getWidth() - leftButton.getWidth(), 0);
-
 		// Click listeners
 		leftButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				// Move out current image : from center to right
+				ParallelAction moveOutAction = new ParallelAction();
+				moveOutAction.addAction(Actions.moveTo(getWidth(), 0, 0.25f));
+				moveOutAction.addAction(Actions.fadeOut(0.25f));
+				contents[selectionIndex].addAction(moveOutAction);
+
 				selectionIndex--;
 				if (selectionIndex < 0)
 					selectionIndex = contents.length - 1;
-				selection = contents[selectionIndex];
+
+				// Move in new selection : from left to center
+				ParallelAction moveInAction = new ParallelAction();
+				moveInAction.addAction(Actions.moveTo(0, 0)); // Move to left side before starting
+				moveInAction.addAction(Actions.moveTo(getWidth() / 2f - contents[selectionIndex].getWidth() / 2f, 0,
+						0.25f));
+				moveInAction.addAction(Actions.fadeIn(0.25f));
+				contents[selectionIndex].addAction(moveInAction);
 			}
 		});
 
 		rightButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				// Move out current image : from center to left
+				ParallelAction moveOutAction = new ParallelAction();
+				moveOutAction.addAction(Actions.moveTo(0, 0, 0.25f));
+				moveOutAction.addAction(Actions.fadeOut(0.25f));
+				contents[selectionIndex].addAction(moveOutAction);
+
+				// Update current selection index
 				selectionIndex = (selectionIndex + 1) % contents.length;
-				selection = contents[selectionIndex];
+
+				// Move in new selection : from right to center
+				ParallelAction moveInAction = new ParallelAction();
+				moveInAction.addAction(Actions.moveTo(getWidth(), 0)); // Move to right side before starting
+				moveInAction.addAction(Actions.moveTo(getWidth() / 2f - contents[selectionIndex].getWidth() / 2f, 0,
+						0.25f));
+				moveInAction.addAction(Actions.fadeIn(0.25f));
+				contents[selectionIndex].addAction(moveInAction);
 			}
 		});
-	}
 
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-		batch.draw(selection, getX() + getWidth() / 2f - selection.getRegionWidth() / 2f, getY());
+		setSize(200, 20);
 	}
 
 	public int getSelectionIndex() {
 		return selectionIndex;
+	}
+
+	@Override
+	protected void sizeChanged() {
+		// Set images' position
+		for (Image image : contents)
+			image.setPosition(getX() + getWidth() / 2f - image.getWidth() / 2f, getY());
+
+		// Change buttons' position
+		leftButton.setPosition(0, 0);
+		rightButton.setPosition(getWidth() - leftButton.getWidth(), 0);
 	}
 }

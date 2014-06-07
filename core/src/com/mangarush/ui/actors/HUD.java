@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -42,14 +43,16 @@ public class HUD extends Group {
 		// Buttons
 		TextureAtlas atlas = Game.GDXVars().getTextureAtlas(MRVars.uiPack);
 		menuButton = new ImageButton(new TextureRegionDrawable(atlas.findRegion("menuButton")));
-		menuButton.setSize(50, 50);
 		replayButton = new ImageButton(new TextureRegionDrawable(atlas.findRegion("replayButton")));
-		replayButton.setSize(50, 50);
 
 		// Add actors
 		addActor(scoreLabel);
 		addActor(menuButton);
 		addActor(replayButton);
+
+		// Message related
+		message = "";
+		messageState = 0f;
 
 		// Click listeners
 		replayButton.addListener(new ClickListener() {
@@ -65,9 +68,6 @@ public class HUD extends Group {
 				Game.showMainScreen();
 			}
 		});
-
-		message = "";
-		messageState = 0f;
 	}
 
 	@Override
@@ -85,22 +85,23 @@ public class HUD extends Group {
 	@Override
 	public void act(float delta) {
 		messageState += delta;
-		if (messageState >= messageDuration && messageDuration != MRVars.INFINITE_DURATION) {
-			// -1 means infinite
+		if (messageState >= messageDuration && messageDuration != MRVars.INFINITE_DURATION)
 			message = "";
-		}
 
 		// Update scoreLabel value
 		scoreLabel.setText(String.format("%04d", player.getScore()));
+
+		// Act buttons etc
+		super.act(delta);
 	}
 
 	@Override
 	protected void sizeChanged() {
-		// Update actors position
+		// Update actors position : super.sizeChanged() is empty
 		scoreLabel.setPosition(getWidth() - scoreLabel.getWidth() - 5f, getHeight() - scoreLabel.getHeight() / 2f);
-		replayButton.setPosition(scoreLabel.getX() - replayButton.getWidth() - 10f,
+		replayButton.setPosition(scoreLabel.getX() - replayButton.getWidth() - 20f,
 				getHeight() - replayButton.getHeight());
-		menuButton.setPosition(replayButton.getX() - menuButton.getWidth() - 10f, replayButton.getY());
+		menuButton.setPosition(replayButton.getX() - menuButton.getWidth() - 20f, replayButton.getY());
 	}
 
 	/** Print a message on screen for a fixed duration (may be infinite -1) */
@@ -108,5 +109,20 @@ public class HUD extends Group {
 		this.message = message;
 		messageDuration = duration;
 		messageState = 0f;
+	}
+
+	/**
+	 * Grow up buttons and put them at the center of the screen : call this when
+	 * game is over
+	 */
+	public void growUp() {
+		// Menu button
+		menuButton
+				.addAction(Actions.moveTo(getWidth() / 2 - menuButton.getWidth() * 2 - 50f, getHeight() / 2.2f, 0.20f));
+		menuButton.getImage().addAction(Actions.scaleTo(2f, 2f, 0.20f));
+
+		// Replat Button
+		replayButton.addAction(Actions.moveTo(getWidth() / 2 + 50f, getHeight() / 2.2f, 0.20f));
+		replayButton.getImage().addAction(Actions.scaleTo(2f, 2f, 0.20f));
 	}
 }
