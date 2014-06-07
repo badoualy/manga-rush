@@ -5,9 +5,9 @@ import com.mangarush.ui.actors.Player;
 
 /** Stage gestture listener */
 public class MRGestureListener extends GestureAdapter {
-	private Player player;
+	private final Player player;
 
-	public MRGestureListener(Player player) {
+	public MRGestureListener(final Player player) {
 		this.player = player;
 	}
 

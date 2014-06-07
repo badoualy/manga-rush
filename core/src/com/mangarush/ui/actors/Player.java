@@ -9,9 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
-import com.mangarush.utils.B2DVars;
-import com.mangarush.utils.MRVars;
+import com.mangarush.ui.utils.B2DVars;
 
 /** Player actor to use in stage */
 public class Player extends Actor {
@@ -28,10 +28,10 @@ public class Player extends Actor {
 
 	// Sprites and animations
 	private final int characterId;
-	private TextureAtlas atlas;
-	private Animation runAnimation;
-	private Animation jumpAnimation;
-	private Animation fallAnimation;
+	private final TextureAtlas atlas;
+	private final Animation runAnimation;
+	private final Animation jumpAnimation;
+	private final Animation fallAnimation;
 	private float stateTime;
 
 	// Utils
@@ -40,7 +40,7 @@ public class Player extends Actor {
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
 
-	public Player(int characterId) {
+	public Player(final int characterId) {
 		body = null;
 
 		// Initial state
@@ -48,7 +48,7 @@ public class Player extends Actor {
 		alive = true;
 
 		// Create animations and textures
-		atlas = Game.GDXVars().getTextureAtlas(MRVars.charactersAtlases[characterId]);
+		atlas = Game.GDXVars().getTextureAtlas(Paths.charactersAtlases[characterId]);
 		this.characterId = characterId;
 		runAnimation = new Animation(0.10f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);

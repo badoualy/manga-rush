@@ -1,0 +1,53 @@
+itachi_atlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+stance
+  rotate: false
+  xy: 4, 4
+  size: 31, 80
+  orig: 31, 80
+  offset: 0, 0
+  index: 1
+stance
+  rotate: false
+  xy: 39, 4
+  size: 34, 80
+  orig: 34, 80
+  offset: 0, 0
+  index: 2
+stance
+  rotate: false
+  xy: 77, 4
+  size: 34, 80
+  orig: 34, 80
+  offset: 0, 0
+  index: 3
+stance
+  rotate: false
+  xy: 39, 4
+  size: 34, 80
+  orig: 34, 80
+  offset: 0, 0
+  index: 4
+stance
+  rotate: false
+  xy: 4, 4
+  size: 31, 80
+  orig: 31, 80
+  offset: 0, 0
+  index: 5
+stance
+  rotate: false
+  xy: 4, 88
+  size: 35, 80
+  orig: 35, 80
+  offset: 0, 0
+  index: 6
+stance
+  rotate: false
+  xy: 43, 88
+  size: 34, 80
+  orig: 34, 80
+  offset: 0, 0
+  index: 7

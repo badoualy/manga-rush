@@ -8,10 +8,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actors.CharactersSelector;
 import com.mangarush.ui.actors.LoadingBar;
-import com.mangarush.utils.MRVars;
 
 /** A stage for loading screen */
 public class LoadingStage extends Stage {
@@ -26,11 +26,11 @@ public class LoadingStage extends Stage {
 		initViewport();
 
 		// Get our textureatlas from the manager, then get assets
-		TextureAtlas atlas = Game.GDXVars().getTextureAtlas(MRVars.loadingPack);
-		font = Game.GDXVars().getFont(MRVars.defaultFont);
+		TextureAtlas atlas = Game.GDXVars().getTextureAtlas(Paths.loadingPack);
+		font = Game.GDXVars().getFont(Paths.defaultFont);
 
 		// Create actors
-		background = new Image(Game.GDXVars().getTexture(MRVars.splashBackground));
+		background = new Image(Game.GDXVars().getTexture(Paths.splashBackground));
 		background.setSize(getWidth(), getHeight());
 		loadingBar = new LoadingBar(atlas);
 		loadingBar.setPosition(getWidth() / 2 - loadingBar.getWidth() / 2, loadingBar.getHeight() / 2f);
@@ -40,7 +40,7 @@ public class LoadingStage extends Stage {
 		addActor(loadingBar);
 
 		// Selection group
-		selector = new CharactersSelector(Game.GDXVars().getTextureAtlas(MRVars.charactersPack));
+		selector = new CharactersSelector(Game.GDXVars().getTextureAtlas(Paths.charactersPack));
 		addActor(selector);
 		selector.setPosition(getWidth() / 2f - selector.getWidth() / 2f, 110);
 

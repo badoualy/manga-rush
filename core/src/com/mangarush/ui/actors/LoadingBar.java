@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
-import com.mangarush.utils.MRVars;
 
 /**
  * Loading bar to add on stage, need an atlas with regions : <br/>
@@ -16,10 +16,10 @@ import com.mangarush.utils.MRVars;
  * loading-bar-hidden
  */
 public class LoadingBar extends Actor {
-	private TextureRegion barRegion, hiddenRegion, frameRegion;
-	private int barMaxWidth;
+	private final TextureRegion barRegion, hiddenRegion, frameRegion;
+	private final int barMaxWidth;
 
-	private BitmapFont font;
+	private final BitmapFont font;
 	private String message;
 
 	private float progress;
@@ -30,12 +30,12 @@ public class LoadingBar extends Actor {
 	 * loading-frame<br/>
 	 * loading-bar-hidden
 	 */
-	public LoadingBar(TextureAtlas atlas) {
+	public LoadingBar(final TextureAtlas atlas) {
 		barRegion = atlas.findRegion("loading-bar");
 		frameRegion = atlas.findRegion("loading-frame");
 		hiddenRegion = atlas.findRegion("loading-bar-hidden");
 
-		font = Game.GDXVars().getFont(MRVars.defaultFont);
+		font = Game.GDXVars().getFont(Paths.defaultFont);
 		message = "";
 
 		progress = 0f;

@@ -13,7 +13,7 @@ public class HighScoreAction extends Action {
 	private final SurvivorStage stage;
 	private final SaveData save;
 
-	public HighScoreAction(SurvivorStage stage) {
+	public HighScoreAction(final SurvivorStage stage) {
 		this.stage = stage;
 		save = Game.Save();
 	}

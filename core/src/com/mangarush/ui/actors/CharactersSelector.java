@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
-import com.mangarush.utils.MRVars;
 
 /**
  * Create a group with a content and two arrows to select one among all atlas
@@ -21,7 +21,7 @@ public class CharactersSelector extends Group {
 	private int selectionIndex;
 	private TextButton leftButton, rightButton;
 
-	public CharactersSelector(TextureAtlas atlas) {
+	public CharactersSelector(final TextureAtlas atlas) {
 		// Load carrousel elements
 		contents = new Image[atlas.getRegions().size];
 		for (int i = 0; i < contents.length; i++) {
@@ -36,14 +36,20 @@ public class CharactersSelector extends Group {
 
 		// Buttons
 		leftButton = new TextButton(" < ", new TextButtonStyle(null, null, null, Game.GDXVars().getFont(
-				MRVars.defaultFont)));
+				Paths.defaultFont)));
 		rightButton = new TextButton(" > ", new TextButtonStyle(null, null, null, Game.GDXVars().getFont(
-				MRVars.defaultFont)));
+				Paths.defaultFont)));
 
 		// Add buttons
 		addActor(leftButton);
 		addActor(rightButton);
 
+		initListeners();
+
+		setSize(200, 20);
+	}
+
+	private void initListeners() {
 		// Click listeners
 		leftButton.addListener(new ClickListener() {
 			@Override
@@ -90,11 +96,6 @@ public class CharactersSelector extends Group {
 			}
 		});
 
-		setSize(200, 20);
-	}
-
-	public int getSelectionIndex() {
-		return selectionIndex;
 	}
 
 	@Override
@@ -106,5 +107,9 @@ public class CharactersSelector extends Group {
 		// Change buttons' position
 		leftButton.setPosition(0, 0);
 		rightButton.setPosition(getWidth() - leftButton.getWidth(), 0);
+	}
+
+	public int getSelectionIndex() {
+		return selectionIndex;
 	}
 }

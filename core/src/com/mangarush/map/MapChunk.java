@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mangarush.map.RandomMap.MapConstants;
-import com.mangarush.utils.B2DVars;
+import com.mangarush.ui.utils.B2DVars;
 
 /** A chunk of map used for map generation, fixed size */
 public class MapChunk {

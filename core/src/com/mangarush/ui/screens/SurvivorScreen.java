@@ -8,9 +8,9 @@ import com.mangarush.ui.stages.SurvivorStage;
 
 /** Screen for a SurvivorStage mode */
 public class SurvivorScreen extends FixedFpsScreen {
-	private SurvivorStage stage;
+	private final SurvivorStage stage;
 
-	public SurvivorScreen(int character) {
+	public SurvivorScreen(final int character) {
 		super(new SurvivorStage(character));
 		stage = (SurvivorStage) super.stage;
 	}

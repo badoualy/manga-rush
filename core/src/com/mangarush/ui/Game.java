@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mangarush.ui.screens.FixedFpsScreen;
 import com.mangarush.ui.screens.SurvivorScreen;
 import com.mangarush.ui.stages.LoadingStage;
-import com.mangarush.utils.GDXVars;
+import com.mangarush.ui.utils.GDXVars;
 import com.mangarush.utils.SaveData;
 
 /** Main class, application listener, extends Game */

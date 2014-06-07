@@ -1,4 +1,4 @@
-package com.mangarush.utils;
+package com.mangarush.ui.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
-/** Bunch of constants B2D-related */
+/** Bunch of constants and globals B2D-related */
 public abstract class B2DVars {
 	/** PPM px = 1 meter **/
 	public static final float PPM = 50f;
@@ -21,7 +21,6 @@ public abstract class B2DVars {
 
 	/** User data to identify fixtures */
 	public static final String USERD_FOOT_SENSOR = "foot_sensor";
-	//public static final String USERD_WALL_SENSOR = "wall_sensor";
 
 	/** Player max velocity (x-axis) : run force */
 	public static final float PLAYER_MAX_SPEED = 225f / PPM;

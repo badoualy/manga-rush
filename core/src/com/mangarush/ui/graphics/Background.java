@@ -14,7 +14,7 @@ public class Background extends BaseDrawable {
 	private final Texture texture;
 	private float x, y;
 
-	public Background(Texture texture) {
+	public Background(final Texture texture) {
 		this.texture = texture;
 		texture.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);
 

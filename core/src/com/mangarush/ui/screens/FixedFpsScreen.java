@@ -12,7 +12,7 @@ public class FixedFpsScreen extends ScreenAdapter {
 
 	private float accumulator;
 
-	public FixedFpsScreen(Stage stage) {
+	public FixedFpsScreen(final Stage stage) {
 		this.stage = stage;
 		accumulator = Game.FIXED_FPS;
 	}

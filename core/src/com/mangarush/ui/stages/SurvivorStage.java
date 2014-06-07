@@ -2,7 +2,7 @@ package com.mangarush.ui.stages;
 
 import static com.mangarush.ui.Game.V_HEIGHT;
 import static com.mangarush.ui.Game.V_WIDTH;
-import static com.mangarush.utils.B2DVars.PPM;
+import static com.mangarush.ui.utils.B2DVars.PPM;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actions.HighScoreAction;
 import com.mangarush.ui.actors.HUD;
@@ -22,8 +23,8 @@ import com.mangarush.ui.actors.Player;
 import com.mangarush.ui.actors.RandomMapRenderer;
 import com.mangarush.ui.graphics.Background;
 import com.mangarush.ui.handlers.MRContactListener;
-import com.mangarush.utils.B2DVars;
-import com.mangarush.utils.MRVars;
+import com.mangarush.ui.utils.B2DVars;
+import com.mangarush.utils.Message;
 import com.mangarush.utils.SaveData;
 
 /** Survivor stage : continue until player lose */
@@ -94,7 +95,7 @@ public class SurvivorStage extends Stage {
 		hud.setBounds(0, 0, V_WIDTH, V_HEIGHT);
 
 		// Backgorund
-		background = new Background(Game.GDXVars().getTexture(MRVars.stageBackground));
+		background = new Background(Game.GDXVars().getTexture(Paths.stageBackground));
 
 		// Add actors in right order
 		addActor(hud);
@@ -243,7 +244,7 @@ public class SurvivorStage extends Stage {
 	public void highScoreBeaten() {
 		highScored = true;
 		// Print message on hud
-		hud.showMessage(MRVars.HIGHSCORE_MESSAGE, MRVars.HIGHSCORE_DURATION);
+		hud.showMessage(Message.highScoreMessage());
 	}
 
 	/** End the current game, do some ending stuff */
@@ -251,7 +252,7 @@ public class SurvivorStage extends Stage {
 		over = true;
 
 		// Print gameover message
-		hud.showMessage(MRVars.GAMEOVER_MESSAGE, -1);
+		hud.showMessage(Message.gameOverMessage());
 		hud.growUp();
 
 		// Update save file

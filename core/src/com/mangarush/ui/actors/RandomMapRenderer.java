@@ -12,7 +12,7 @@ public class RandomMapRenderer extends com.badlogic.gdx.scenes.scene2d.Actor {
 	private final int tileSize;
 
 	// Map and position
-	private RandomMap map;
+	private final RandomMap map;
 	private int worldPosition; // Current position in the world (in tiles)
 
 	public RandomMapRenderer(final World world, final int viewportWidth, final int viewportHeight, final int tileSize) {
@@ -38,15 +38,6 @@ public class RandomMapRenderer extends com.badlogic.gdx.scenes.scene2d.Actor {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void act(float delta) {
-		// Faster to do this directly instead of using this.addAction()
-		// Don't call it too often
-		/* if (worldPosition > cleanWorldRunnable.getLastPosition() +
-		 * getWidth())
-		 * MRVars.executor.execute(cleanWorldRunnable); */
 	}
 
 	public void setPosition(float position) {

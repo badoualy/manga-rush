@@ -6,7 +6,9 @@ import com.badlogic.gdx.Preferences;
 /** Utils class to store datas to be saved */
 public class SaveData {
 	private static final String SAVE_PREFERENCE_NAME = "save_data_preferences";
-	private final Preferences prefs;
+
+	private final Preferences prefs; // Where to save
+
 	public int highScore; // Highest score
 	public long timeSpend; // Time spend playing
 
