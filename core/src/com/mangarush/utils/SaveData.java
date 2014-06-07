@@ -15,7 +15,6 @@ public class SaveData {
 		prefs = Gdx.app.getPreferences(SAVE_PREFERENCE_NAME);
 		highScore = prefs.getInteger("highScore", 0);
 		timeSpend = prefs.getLong("timeSpend", 0);
-		highScore = 0;
 	}
 
 	/** Save datas (flush Preferences) */
