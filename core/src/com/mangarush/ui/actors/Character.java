@@ -6,28 +6,25 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.utils.B2DVars;
 
 /**
- * Abstract actor for a character on screen (player or enemy) with an associated
- * B2D-body
+ * Abstract actor for a character on screen (player or enemy)
  */
-public abstract class Character extends Actor {
+public abstract class Character extends BodyActor {
 	protected enum State {
-		RUN, JUMP, FALL, LANDED, DEAD
+		RUN, JUMP, FALL, LANDED, THROW, DEAD
 	}
 
-	// B2D-body
-	protected Body body;
+	// State
+	private boolean alive;
 
 	// Sprites and animations
 	private final int characterId;
@@ -36,6 +33,11 @@ public abstract class Character extends Actor {
 
 	/** Takes the ID and the world to add body in and its initial position */
 	public Character(final int characterId, final World world, final Vector2 position) {
+		super(world, position, 45, 50);
+
+		// State
+		alive = true;
+
 		// Textures
 		this.characterId = characterId;
 		atlas = Game.GDXVars().getTextureAtlas(Paths.charactersAtlases[characterId]);
@@ -43,45 +45,31 @@ public abstract class Character extends Actor {
 
 		// Default bounds
 		setBounds(0, 0, 45, 50);
-
-		if (world != null) {
-			position.add(getWidth() / 2f / PPM, -getHeight() / PPM);
-			initBody(world, position);
-		} else
-			body = null;
 	}
 
 	/** Init B2D body */
-	private void initBody(final World world, final Vector2 position) {
+	@Override
+	protected void initBody(final World world, final Vector2 position, final float width, final float height) {
 		// Object instanciate
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
 		PolygonShape ps;
 
-		// Player body (first position : top-left corner)
-		float pWidth = getWidth();
-		float pHeight = getHeight();
+		// body
 		bdef.position.set(position);
 		bdef.type = BodyType.DynamicBody; // To dynamic
 		bdef.fixedRotation = true;
 		body = world.createBody(bdef);
 		body.setUserData(this); // Set userData as player to retrieve in contact listener
 
-		// Player fixture
+		// fixture
 		fdef.shape = ps = new PolygonShape();
 		fdef.friction = 0;
 		fdef.density = 1;
 		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
 		fdef.filter.maskBits = B2DVars.GROUND_MASK;
-		ps.setAsBox(pWidth / 2f / PPM, pHeight / 2f / PPM);
+		ps.setAsBox(width / 2f / PPM, height / 2f / PPM);
 		body.createFixture(fdef);
-		ps.dispose();
-
-		// Player foot sensor
-		fdef.isSensor = true;
-		fdef.shape = ps = new PolygonShape();
-		ps.setAsBox(pWidth / 6f / PPM, 5f / PPM, new Vector2(0, -pHeight / 2f / PPM), 0f);
-		body.createFixture(fdef).setUserData(B2DVars.USERD_FOOT_SENSOR);
 		ps.dispose();
 	}
 
@@ -107,45 +95,17 @@ public abstract class Character extends Actor {
 		super.act(delta);
 	}
 
-	@Override
-	public float getX() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().x * B2DVars.PPM - getWidth() / 2f;
-		// Shouldn't happen !
-		return super.getX();
-	}
-
-	@Override
-	public float getY() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().y * B2DVars.PPM - getHeight() / 2f;
-		// Shouldn't happen !
-		return super.getY();
-	}
-
-	public float getCenterX() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().x * B2DVars.PPM;
-		// Shouldn't happen !
-		return super.getX() + getWidth() / 2f;
-	}
-
-	public float getCenterY() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().y * B2DVars.PPM;
-		// Shouldn't happen !
-		return super.getY() + getHeight() / 2f;
-	}
-
-	public void setBody(Body body) {
-		this.body = body;
-	}
-
 	public int getCharacterId() {
 		return characterId;
+	}
+
+	/** Return true if character is alive */
+	public boolean isAlive() {
+		return alive;
+	}
+
+	/** Set character alive or not */
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 }

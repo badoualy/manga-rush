@@ -90,7 +90,7 @@ public class MapChunk {
 
 		// Common fixture defs 
 		fdef.filter.categoryBits = B2DVars.GROUND_MASK;
-		fdef.filter.maskBits = B2DVars.PLAYER_MASK;
+		fdef.filter.maskBits = B2DVars.PLAYER_MASK | B2DVars.ENEMY_MASK;
 
 		// Loop through all floor rectangles
 		// Don't need to be synchronized if called in ui's thread
@@ -100,7 +100,7 @@ public class MapChunk {
 			center.y = (originY + rect.y + rect.height / 2f) / B2DVars.PPM;
 			fdef.shape = ps = new PolygonShape();
 			ps.setAsBox(rect.width / 2f / B2DVars.PPM, rect.height / 2f / B2DVars.PPM, center, 0);
-			B2DVars.floorFixtures.add(B2DVars.floorBody.createFixture(fdef));
+			B2DVars.groundFixtures.add(B2DVars.groundBody.createFixture(fdef));
 			ps.dispose();
 		}
 	}

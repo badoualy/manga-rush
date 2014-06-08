@@ -5,49 +5,49 @@ repeat: none
 stance
   rotate: false
   xy: 4, 4
-  size: 31, 80
-  orig: 31, 80
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 1
 stance
   rotate: false
-  xy: 39, 4
-  size: 34, 80
-  orig: 34, 80
+  xy: 48, 4
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 2
 stance
   rotate: false
-  xy: 77, 4
-  size: 34, 80
-  orig: 34, 80
+  xy: 4, 88
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 3
 stance
   rotate: false
-  xy: 39, 4
-  size: 34, 80
-  orig: 34, 80
+  xy: 48, 4
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 4
 stance
   rotate: false
   xy: 4, 4
-  size: 31, 80
-  orig: 31, 80
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 5
 stance
   rotate: false
-  xy: 4, 88
-  size: 35, 80
-  orig: 35, 80
+  xy: 48, 88
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 6
 stance
   rotate: false
-  xy: 43, 88
-  size: 34, 80
-  orig: 34, 80
+  xy: 4, 172
+  size: 40, 80
+  orig: 40, 80
   offset: 0, 0
   index: 7

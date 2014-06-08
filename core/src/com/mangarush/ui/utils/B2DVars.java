@@ -18,6 +18,8 @@ public abstract class B2DVars {
 	/** Masks for collision handling (bitmask) */
 	public static final int GROUND_MASK = 2;
 	public static final int PLAYER_MASK = 4;
+	public static final int ENEMY_MASK = 8;
+	public static final int PROJECTILE_MASK = 16;
 
 	/** User data to identify fixtures */
 	public static final String USERD_FOOT_SENSOR = "foot_sensor";
@@ -30,7 +32,7 @@ public abstract class B2DVars {
 	public static final float JUMP_TIMEOUT = 0f;
 
 	/** Floor body */
-	public static Body floorBody = null;
+	public static Body groundBody = null;
 	/** List containing fixtures */
-	public static List<Fixture> floorFixtures = new ArrayList<Fixture>(60);
+	public static List<Fixture> groundFixtures = new ArrayList<Fixture>(60);
 }

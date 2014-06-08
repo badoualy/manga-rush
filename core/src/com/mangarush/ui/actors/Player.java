@@ -1,11 +1,15 @@
 package com.mangarush.ui.actors;
 
+import static com.mangarush.ui.utils.B2DVars.PPM;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mangarush.ui.utils.B2DVars;
 
@@ -13,39 +17,60 @@ import com.mangarush.ui.utils.B2DVars;
 public class Player extends Character {
 	// Player state
 	private State state;
-	private boolean alive;
 
 	// Animations
 	private final Animation runAnimation;
 	private final Animation jumpAnimation;
 	private final Animation fallAnimation;
+	private final Animation throwAnimation;
+	private final TextureRegion projectile;
 
 	// Utils
 	private Fixture floorFix; // Current floor fixture
 	private int groundContacts;
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
+	private boolean threw; // Did throw the projectile ?
 
 	public Player(final int characterId, World world, final Vector2 position) {
 		super(characterId, world, position);
 
 		// Initial state
 		state = State.FALL;
-		alive = true;
 
 		// Create animations and textures
 		runAnimation = new Animation(0.10f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);
 		fallAnimation = new Animation(0.15f, atlas.findRegions("fall"), PlayMode.LOOP);
+		throwAnimation = new Animation(0.06f, atlas.findRegions("throw"));
+		projectile = atlas.findRegion("projectile");
 		stateTime = 0f;
 
 		// In the air and can't jump
 		groundContacts = 0;
 		lastJump = 0;
 		doubleJumped = true;
+		threw = false;
+	}
 
-		// Default bounds
-		setBounds(0, 0, 45, 50);
+	@Override
+	protected void initBody(World world, Vector2 position, float width, float height) {
+		super.initBody(world, position, width, height);
+
+		/* Init the player foot sensor, basic characters don't need it since
+		 * they don't jump */
+		FixtureDef fdef = new FixtureDef();
+		PolygonShape ps;
+
+		fdef.isSensor = true;
+		fdef.friction = 0;
+		fdef.density = 1;
+		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
+		fdef.filter.maskBits = B2DVars.GROUND_MASK;
+		fdef.shape = ps = new PolygonShape();
+		ps.setAsBox(width / 6f / PPM, 5f / PPM, new Vector2(0, -height / 2f / PPM), 0f);
+		body.createFixture(fdef).setUserData(B2DVars.USERD_FOOT_SENSOR);
+		ps.dispose();
 	}
 
 	@Override
@@ -55,6 +80,9 @@ public class Player extends Character {
 		switch (state) {
 			case JUMP:
 				currFrame = jumpAnimation.getKeyFrame(stateTime);
+				break;
+			case THROW:
+				currFrame = throwAnimation.getKeyFrame(stateTime);
 				break;
 			case DEAD: // Not in sight
 			case FALL:
@@ -80,6 +108,13 @@ public class Player extends Character {
 		if (state == State.RUN)
 			body.setLinearVelocity(B2DVars.PLAYER_MAX_SPEED, 0);
 
+		// Check if need to create projectile
+		if (state == State.THROW && !threw && throwAnimation.getKeyFrameIndex(stateTime) == 1) {
+			Vector2 pos = getPosition().add(getWidth(), getHeight() / 2f);
+			getStage().addActor(new Projectile(projectile, body.getWorld(), pos));
+			threw = true;
+		}
+
 		// Update jump permission
 		lastJump += delta;
 
@@ -93,6 +128,13 @@ public class Player extends Character {
 		if (state == State.LANDED) {
 			// Landed : showed LAND frame, now we run
 			state = State.RUN;
+			stateTime = 0f;
+		} else if (state == State.THROW && throwAnimation.isAnimationFinished(stateTime)) {
+			// By putting this case before JUMP, don't have to test y velocity
+			if (isOnGround())
+				state = State.RUN;
+			else
+				state = State.JUMP;
 			stateTime = 0f;
 		} else if (state == State.JUMP && body.getLinearVelocity().y < 0) {
 			// Jumping and vy < 0 means falling
@@ -108,11 +150,11 @@ public class Player extends Character {
 			// Running and not on ground means falling
 			state = State.FALL;
 			stateTime = 0f;
-		} else if (alive && getY() < -getHeight() * 1.5f) {
+		} else if (isAlive() && getY() < -getHeight() * 1.5f) {
 			// Player is under the map : lost : *1.5 for drawing safety
 			body.setLinearVelocity(0, 0);
 			state = State.DEAD;
-			alive = false;
+			setAlive(false);
 		}
 	}
 
@@ -129,6 +171,15 @@ public class Player extends Character {
 			doubleJumped = true;
 
 		state = State.JUMP;
+		stateTime = 0f;
+	}
+
+	/** Throw a projectile */
+	public void throwProjectile() {
+		if (state == State.THROW)
+			return;
+		state = State.THROW;
+		threw = false;
 		stateTime = 0f;
 	}
 
@@ -152,11 +203,6 @@ public class Player extends Character {
 	public void leftGround() {
 		groundContacts--;
 		this.floorFix = null;
-	}
-
-	/** Return true if player is alive */
-	public boolean isAlive() {
-		return alive;
 	}
 
 	/** Return the fixture the player is on or null is !isOnGroun() */

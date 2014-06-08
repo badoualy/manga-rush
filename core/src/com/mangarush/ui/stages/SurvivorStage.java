@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actions.HighScoreAction;
+import com.mangarush.ui.actors.Enemy;
 import com.mangarush.ui.actors.HUD;
 import com.mangarush.ui.actors.Player;
 import com.mangarush.ui.actors.RandomMapRenderer;
@@ -95,11 +96,14 @@ public class SurvivorStage extends Stage {
 		bdef.type = BodyType.StaticBody;
 		bdef.fixedRotation = true;
 		bdef.position.set(0, 0);
-		B2DVars.floorBody = world.createBody(bdef);
+		B2DVars.groundBody = world.createBody(bdef);
 	}
 
 	/** Init stage's actors (HUD, players, ...) */
 	private void initActors(int character) {
+		// Backgorund
+		background = new Background(Game.GDXVars().getTexture(Paths.stageBackground));
+
 		// Player
 		player = new Player(character, world, new Vector2(0, V_HEIGHT / B2DVars.PPM));
 
@@ -107,8 +111,9 @@ public class SurvivorStage extends Stage {
 		hud = new HUD(player);
 		hud.setBounds(0, 0, V_WIDTH, V_HEIGHT);
 
-		// Backgorund
-		background = new Background(Game.GDXVars().getTexture(Paths.stageBackground));
+		// Enemy
+		Enemy enemy = new Enemy(3, world, new Vector2(6, V_HEIGHT / 1.2f / B2DVars.PPM));
+		addActor(enemy);
 
 		// Add actors in right order
 		addActor(hud);
@@ -131,11 +136,11 @@ public class SurvivorStage extends Stage {
 	/** Gamestep */
 	private void update(float delta) {
 		// Check to remove old fixtures
-		if (player.isOnGround() && !B2DVars.floorFixtures.isEmpty()) {
+		if (player.isOnGround() && !B2DVars.groundFixtures.isEmpty()) {
 			// First fixture should be the one player is on right now
-			while (B2DVars.floorFixtures.get(0) != player.getFloorFix()) {
-				B2DVars.floorBody.destroyFixture(B2DVars.floorFixtures.get(0));
-				B2DVars.floorFixtures.remove(0);
+			while (B2DVars.groundFixtures.get(0) != player.getFloorFix()) {
+				B2DVars.groundBody.destroyFixture(B2DVars.groundFixtures.get(0));
+				B2DVars.groundFixtures.remove(0);
 			}
 		}
 
@@ -200,8 +205,8 @@ public class SurvivorStage extends Stage {
 		world.dispose();
 
 		// So it's recreated in MapChunk if player replays
-		B2DVars.floorBody = null;
-		B2DVars.floorFixtures.clear();
+		B2DVars.groundBody = null;
+		B2DVars.groundFixtures.clear();
 	}
 
 	/** Player made a new highscore */

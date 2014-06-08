@@ -4,106 +4,148 @@ filter: Linear,Linear
 repeat: none
 bump
   rotate: false
-  xy: 57, 4
+  xy: 4, 4
   size: 45, 55
   orig: 45, 55
   offset: 0, 0
   index: 1
 bump
   rotate: false
-  xy: 57, 63
+  xy: 53, 4
   size: 37, 54
   orig: 37, 54
   offset: 0, 0
   index: 2
 bump
   rotate: false
-  xy: 106, 4
+  xy: 94, 4
   size: 44, 48
   orig: 44, 48
   offset: 0, 0
   index: 3
 bump
   rotate: false
-  xy: 80, 174
+  xy: 142, 4
   size: 57, 28
   orig: 57, 28
   offset: 0, 0
   index: 4
 bump
   rotate: false
-  xy: 184, 4
+  xy: 4, 63
   size: 61, 21
   orig: 61, 21
   offset: 0, 0
   index: 5
 fall
   rotate: false
-  xy: 4, 4
+  xy: 69, 63
   size: 49, 64
   orig: 49, 64
   offset: 0, 0
   index: 1
 fall
   rotate: false
-  xy: 4, 72
+  xy: 122, 63
   size: 49, 63
   orig: 49, 63
   offset: 0, 0
   index: 2
 jump
   rotate: false
-  xy: 42, 139
+  xy: 175, 63
   size: 34, 63
   orig: 34, 63
   offset: 0, 0
   index: 1
 jump
   rotate: false
-  xy: 4, 139
+  xy: 213, 63
   size: 34, 63
   orig: 34, 63
   offset: 0, 0
   index: 2
+projectile
+  rotate: false
+  xy: 4, 131
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 1
 run
   rotate: false
-  xy: 136, 115
+  xy: 32, 131
   size: 44, 48
   orig: 44, 48
   offset: 0, 0
   index: 1
 run
   rotate: false
-  xy: 108, 206
+  xy: 80, 131
   size: 58, 43
   orig: 58, 43
   offset: 0, 0
   index: 2
 run
   rotate: false
-  xy: 98, 63
+  xy: 142, 131
   size: 50, 48
   orig: 50, 48
   offset: 0, 0
   index: 3
 run
   rotate: false
-  xy: 4, 206
+  xy: 196, 131
   size: 41, 46
   orig: 41, 46
   offset: 0, 0
   index: 4
 run
   rotate: false
-  xy: 49, 206
+  xy: 4, 183
   size: 55, 45
   orig: 55, 45
   offset: 0, 0
   index: 5
 run
   rotate: false
-  xy: 80, 121
+  xy: 63, 183
   size: 52, 49
   orig: 52, 49
   offset: 0, 0
   index: 6
+throw
+  rotate: false
+  xy: 119, 183
+  size: 36, 57
+  orig: 36, 57
+  offset: 0, 0
+  index: 1
+throw
+  rotate: false
+  xy: 159, 183
+  size: 55, 52
+  orig: 55, 52
+  offset: 0, 0
+  index: 2
+throw
+  rotate: false
+  xy: 4, 244
+  size: 53, 45
+  orig: 53, 45
+  offset: 0, 0
+  index: 3
+throw
+  rotate: false
+  xy: 61, 244
+  size: 51, 46
+  orig: 51, 46
+  offset: 0, 0
+  index: 4
+throw
+  rotate: false
+  xy: 116, 244
+  size: 46, 47
+  orig: 46, 47
+  offset: 0, 0
+  index: 5
