@@ -16,9 +16,11 @@ import com.mangarush.ui.Game;
  * loading-bar-hidden
  */
 public class LoadingBar extends Actor {
+	// Progress bar assets
 	private final TextureRegion barRegion, hiddenRegion, frameRegion;
 	private final int barMaxWidth;
 
+	// Progress text
 	private final BitmapFont font;
 	private String message;
 
@@ -60,7 +62,7 @@ public class LoadingBar extends Actor {
 		}
 	}
 
-	/** Set current progress in % (<= 1) */
+	/** Set current progress in percent (<= 1) */
 	public void setProgress(float percent) {
 		progress = percent;
 		barRegion.setRegionWidth((int) (barMaxWidth * progress));

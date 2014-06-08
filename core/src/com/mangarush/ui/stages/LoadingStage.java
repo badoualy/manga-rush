@@ -10,15 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
-import com.mangarush.ui.actors.CharactersSelector;
+import com.mangarush.ui.actors.AtlasSelector;
 import com.mangarush.ui.actors.LoadingBar;
 
 /** A stage for loading screen */
 public class LoadingStage extends Stage {
+	// GDX-assets
 	private Image background;
-	private BitmapFont font;
 	private LoadingBar loadingBar;
-	private CharactersSelector selector;
+	private BitmapFont font;
+
+	// Selector for characters
+	private AtlasSelector selector;
 
 	private float progress;
 
@@ -40,7 +43,7 @@ public class LoadingStage extends Stage {
 		addActor(loadingBar);
 
 		// Selection group
-		selector = new CharactersSelector(Game.GDXVars().getTextureAtlas(Paths.charactersPack));
+		selector = new AtlasSelector(Game.GDXVars().getTextureAtlas(Paths.charactersPack));
 		addActor(selector);
 		selector.setPosition(getWidth() / 2f - selector.getWidth() / 2f, 110);
 
@@ -87,7 +90,7 @@ public class LoadingStage extends Stage {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (!super.touchUp(screenX, screenY, pointer, button)) {
 			if (Game.GDXVars().assetManager.update()) { // Load some, will return true if done loading
-				Game.startSurvivorGame(selector.getSelectionIndex());
+				Game.startSurvivorGame(selector.getSelectedIndex());
 				return true;
 			}
 		}

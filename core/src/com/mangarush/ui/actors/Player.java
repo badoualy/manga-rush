@@ -3,36 +3,22 @@ package com.mangarush.ui.actors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mangarush.constants.Paths;
-import com.mangarush.ui.Game;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mangarush.ui.utils.B2DVars;
 
 /** Player actor to use in stage */
-public class Player extends Actor {
-	private enum State {
-		RUN, JUMP, FALL, LANDED, DEAD
-	}
-
-	// B2D-body
-	private Body body;
-
+public class Player extends Character {
 	// Player state
 	private State state;
 	private boolean alive;
 
-	// Sprites and animations
-	private final int characterId;
-	private final TextureAtlas atlas;
+	// Animations
 	private final Animation runAnimation;
 	private final Animation jumpAnimation;
 	private final Animation fallAnimation;
-	private float stateTime;
 
 	// Utils
 	private Fixture floorFix; // Current floor fixture
@@ -40,16 +26,14 @@ public class Player extends Actor {
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
 
-	public Player(final int characterId) {
-		body = null;
+	public Player(final int characterId, World world) {
+		super(characterId, world);
 
 		// Initial state
 		state = State.FALL;
 		alive = true;
 
 		// Create animations and textures
-		atlas = Game.GDXVars().getTextureAtlas(Paths.charactersAtlases[characterId]);
-		this.characterId = characterId;
 		runAnimation = new Animation(0.10f, atlas.findRegions("run"), PlayMode.LOOP);
 		jumpAnimation = new Animation(0.15f, atlas.findRegions("jump"), PlayMode.LOOP);
 		fallAnimation = new Animation(0.15f, atlas.findRegions("fall"), PlayMode.LOOP);
@@ -84,14 +68,11 @@ public class Player extends Actor {
 		}
 
 		// Draw
-		batch.draw(currFrame, getCenterX() - currFrame.getRegionWidth() / 2f, getY());
+		super.draw(batch, parentAlpha, currFrame);
 	}
 
 	@Override
 	public void act(float delta) {
-		// Update animation stateTime
-		stateTime += delta;
-
 		// Update state
 		updateState();
 
@@ -100,10 +81,9 @@ public class Player extends Actor {
 			body.setLinearVelocity(B2DVars.PLAYER_MAX_SPEED, 0);
 
 		// Update jump permission
-		if (lastJump < B2DVars.JUMP_TIMEOUT)
-			lastJump += delta;
+		lastJump += delta;
 
-		// Call added actions
+		// Update stateTime and call actions
 		super.act(delta);
 	}
 
@@ -152,62 +132,34 @@ public class Player extends Actor {
 		stateTime = 0f;
 	}
 
-	@Override
-	public float getX() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().x * B2DVars.PPM - getWidth() / 2;
-		// Shouldn't happen !
-		return super.getX();
-	}
-
-	@Override
-	public float getY() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().y * B2DVars.PPM - getHeight() / 2;
-		// Shouldn't happen !
-		return super.getY();
-	}
-
-	public float getCenterX() {
-		// Use B2D object's coordinates : auto-updated
-		if (body != null)
-			return body.getPosition().x * B2DVars.PPM;
-		// Shouldn't happen !
-		return super.getX() + getWidth() / 2;
-	}
-
+	/** Return true if player is currently on the ground */
 	public boolean isOnGround() {
 		return groundContacts > 0;
 	}
 
+	/** Return true if player can jump now */
 	public boolean canJump() {
 		return (isOnGround() || !doubleJumped) && lastJump >= B2DVars.JUMP_TIMEOUT;
 	}
 
-	public void setBody(Body body) {
-		this.body = body;
-	}
-
+	/** Notify the player he touched the ground */
 	public void touchedGround(Fixture floorFix) {
 		groundContacts++;
 		this.floorFix = floorFix;
 	}
 
+	/** Notify the player he left the ground */
 	public void leftGround() {
 		groundContacts--;
 		this.floorFix = null;
 	}
 
+	/** Return true if player is alive */
 	public boolean isAlive() {
 		return alive;
 	}
 
-	public void setAlive(boolean alive) {
-		this.alive = alive;
-	}
-
+	/** Return the fixture the player is on or null is !isOnGroun() */
 	public Fixture getFloorFix() {
 		return floorFix;
 	}
@@ -215,13 +167,5 @@ public class Player extends Actor {
 	/** Return current score : position in B2DWorld */
 	public int getScore() {
 		return (int) body.getPosition().x;
-	}
-
-	public Vector2 getLinearVelocity() {
-		return body.getLinearVelocity();
-	}
-
-	public int getCharacterId() {
-		return characterId;
 	}
 }

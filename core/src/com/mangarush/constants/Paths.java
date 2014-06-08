@@ -42,6 +42,7 @@ public abstract class Paths {
 	public static final String[] charactersAtlases = {
 			charactersDir + "naruto.txt",
 			charactersDir + "misaka.txt",
-			charactersDir + "shana.txt"
+			charactersDir + "shana.txt",
+			charactersDir + "itachi.txt"
 	};
 }

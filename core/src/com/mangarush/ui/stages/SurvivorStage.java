@@ -2,16 +2,11 @@ package com.mangarush.ui.stages;
 
 import static com.mangarush.ui.Game.V_HEIGHT;
 import static com.mangarush.ui.Game.V_WIDTH;
-import static com.mangarush.ui.utils.B2DVars.PPM;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -62,8 +57,8 @@ public class SurvivorStage extends Stage {
 		super();
 
 		initViewport(); // Worldsize, cameras
-		initActors(character); // Stage content (actors)
 		initB2DWorld(); // B2D world
+		initActors(character); // Stage content (actors)
 		initMap(); // Initialise map
 
 		over = false;
@@ -85,10 +80,27 @@ public class SurvivorStage extends Stage {
 		batch = getBatch();
 	}
 
+	/**
+	 * Setup Box2D world : after some issues, only thing working was to use
+	 * boxes
+	 */
+	private void initB2DWorld() {
+		// World : Graivity gx = 0, gy = -9.81 topward
+		world = new World(B2DVars.GRAVITY, true);
+		world.setContactListener(new MRContactListener());
+
+		// Floor body
+		BodyDef bdef = new BodyDef();
+		bdef.type = BodyType.StaticBody;
+		bdef.fixedRotation = true;
+		bdef.position.set(0, 0);
+		B2DVars.floorBody = world.createBody(bdef);
+	}
+
 	/** Init stage's actors (HUD, players, ...) */
 	private void initActors(int character) {
 		// Player
-		player = new Player(character);
+		player = new Player(character, world);
 
 		// HUD (bounds = screen)
 		hud = new HUD(player);
@@ -104,55 +116,6 @@ public class SurvivorStage extends Stage {
 		// Highscore checking action : we had it to the player for more logic
 		highScoreAction = new HighScoreAction(this);
 		player.addAction(highScoreAction);
-	}
-
-	/**
-	 * Setup Box2D world : after some issues, only thing working was to use
-	 * boxes
-	 */
-	private void initB2DWorld() {
-		// World : Graivity gx = 0, gy = -9.81 topward
-		world = new World(B2DVars.GRAVITY, true);
-		world.setContactListener(new MRContactListener());
-
-		// Object instanciate
-		Body body;
-		BodyDef bdef = new BodyDef();
-		FixtureDef fdef = new FixtureDef();
-		PolygonShape ps;
-
-		// Floor body
-		bdef.type = BodyType.StaticBody;
-		bdef.fixedRotation = true;
-		bdef.position.set(0, 0);
-		B2DVars.floorBody = world.createBody(bdef);
-
-		// Player body (first position : top-left corner)
-		float pWidth = player.getWidth();
-		float pHeight = player.getHeight();
-		bdef.position.set(pWidth / 2f / PPM, (V_HEIGHT - pHeight) / PPM);
-		bdef.type = BodyType.DynamicBody; // To dynamic
-		bdef.fixedRotation = true;
-		body = world.createBody(bdef);
-		body.setUserData(player); // Set userData as player to retrieve in contact listener
-		player.setBody(body); // Set player's actor's body
-
-		// Player fixture
-		fdef.shape = ps = new PolygonShape();
-		fdef.friction = 0;
-		fdef.density = 1;
-		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
-		fdef.filter.maskBits = B2DVars.GROUND_MASK;
-		ps.setAsBox(pWidth / 2f / PPM, pHeight / 2f / PPM);
-		body.createFixture(fdef);
-		ps.dispose();
-
-		// Player foot sensor
-		fdef.isSensor = true;
-		fdef.shape = ps = new PolygonShape();
-		ps.setAsBox(pWidth / 6f / PPM, 5f / PPM, new Vector2(0, -pHeight / 2f / PPM), 0f);
-		body.createFixture(fdef).setUserData(B2DVars.USERD_FOOT_SENSOR);
-		ps.dispose();
 	}
 
 	private void initMap() {
