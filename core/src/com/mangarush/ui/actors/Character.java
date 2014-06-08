@@ -1,6 +1,5 @@
 package com.mangarush.ui.actors;
 
-import static com.mangarush.ui.Game.V_HEIGHT;
 import static com.mangarush.ui.utils.B2DVars.PPM;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mangarush.constants.Paths;
@@ -35,8 +34,8 @@ public abstract class Character extends Actor {
 	protected final TextureAtlas atlas;
 	protected float stateTime;
 
-	/** Takes the ID and the world to add body in */
-	public Character(final int characterId, final World world) {
+	/** Takes the ID and the world to add body in and its initial position */
+	public Character(final int characterId, final World world, final Vector2 position) {
 		// Textures
 		this.characterId = characterId;
 		atlas = Game.GDXVars().getTextureAtlas(Paths.charactersAtlases[characterId]);
@@ -45,14 +44,15 @@ public abstract class Character extends Actor {
 		// Default bounds
 		setBounds(0, 0, 45, 50);
 
-		if (world != null)
-			initBody(world);
-		else
+		if (world != null) {
+			position.add(getWidth() / 2f / PPM, -getHeight() / PPM);
+			initBody(world, position);
+		} else
 			body = null;
 	}
 
 	/** Init B2D body */
-	private void initBody(final World world) {
+	private void initBody(final World world, final Vector2 position) {
 		// Object instanciate
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
@@ -61,7 +61,7 @@ public abstract class Character extends Actor {
 		// Player body (first position : top-left corner)
 		float pWidth = getWidth();
 		float pHeight = getHeight();
-		bdef.position.set(pWidth / 2f / PPM, (V_HEIGHT - pHeight) / PPM);
+		bdef.position.set(position);
 		bdef.type = BodyType.DynamicBody; // To dynamic
 		bdef.fixedRotation = true;
 		body = world.createBody(bdef);

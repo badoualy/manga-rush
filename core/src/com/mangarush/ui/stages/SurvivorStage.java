@@ -5,6 +5,7 @@ import static com.mangarush.ui.Game.V_WIDTH;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
@@ -100,7 +101,7 @@ public class SurvivorStage extends Stage {
 	/** Init stage's actors (HUD, players, ...) */
 	private void initActors(int character) {
 		// Player
-		player = new Player(character, world);
+		player = new Player(character, world, new Vector2(0, V_HEIGHT / B2DVars.PPM));
 
 		// HUD (bounds = screen)
 		hud = new HUD(player);

@@ -26,8 +26,8 @@ public class Player extends Character {
 	private float lastJump; // Time elapsed since last jump(in seconds)
 	private boolean doubleJumped;
 
-	public Player(final int characterId, World world) {
-		super(characterId, world);
+	public Player(final int characterId, World world, final Vector2 position) {
+		super(characterId, world, position);
 
 		// Initial state
 		state = State.FALL;
