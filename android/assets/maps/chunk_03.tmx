@@ -3,15 +3,19 @@
  <tileset firstgid="1" name="map_atlas" tilewidth="32" tileheight="32">
   <image source="../sheets/map_sheet.png" width="128" height="128"/>
  </tileset>
- <layer name="floor" width="30" height="15">
+ <layer name="ground" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2QQQrAIBADte1N///eVujCEIK24HEDc1BDNmspqVQq9U/14Xg5N+aNrA6q5F9CN7Ab0eyOnPHeQNxzLnOaQbuRmdfdaz/XMeCOq7n0ubnO53LcvuzxdV/1r/rv/uc43wNUNX8IBwAA
+   H4sIAAAAAAAAC2NgGAWjYBQMZcBLY/XYACMQM0ExMxDzYMHIapgIqGckYBYMs6BhbiwYXQ0+9TBxJhxmIatDdj+17MXlB2zqcLkROWwJ2YusDp+96OYR419kd1DDv9SMX0L2AgDgyxO1CAcAAA==
   </data>
  </layer>
- <objectgroup name="floor_obj" width="30" height="15">
+ <objectgroup name="ground_obj" width="30" height="15">
   <object x="0" y="288" width="128" height="192"/>
-  <object x="288" y="320" width="224" height="160"/>
+  <object x="288" y="288" width="224" height="192"/>
   <object x="640" y="288" width="96" height="192"/>
-  <object x="832" y="288" width="64" height="192"/>
+ </objectgroup>
+ <objectgroup name="enemy_obj" width="30" height="15">
+  <object x="320" y="256" width="32" height="32"/>
+  <object x="416" y="256" width="32" height="32"/>
+  <object x="672" y="256" width="32" height="32"/>
  </objectgroup>
 </map>

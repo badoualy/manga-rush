@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mangarush.constants.Paths;
-import com.mangarush.map.RandomMap.MapConstants;
+import com.mangarush.map.MapConstants;
 
 /**
  * Bunch of constants and globals LibGDX-related : textures MUST be non-static :
@@ -51,16 +51,15 @@ public class GDXVars {
 	/** Return the texture associated with the value */
 	public TextureRegion getTileTexture(short type) {
 		// Non existing type
-		if (type < 0 || type >= MapConstants.TYPE_COUNT)
+		if (type < 0 || type > MapConstants.TYPE_COUNT)
 			return null;
 		// First call
 		if (tilesRegions == null) {
 			// First call allocate an array with all texture : findRegion can be slow, cache the result
 			TextureAtlas tilesAtlas = getTextureAtlas(Paths.tilesPack);
 			tilesRegions = new TextureRegion[MapConstants.TYPE_COUNT];
-			for (int i = 0; i < tilesRegions.length; i++) {
+			for (int i = 0; i < tilesRegions.length; i++)
 				tilesRegions[i] = tilesAtlas.findRegion("" + i);
-			}
 		}
 
 		return tilesRegions[type];

@@ -8,7 +8,8 @@ import com.mangarush.ui.utils.B2DVars;
 
 /**
  * Abstract type defining an actor following a B2D body position. Actor size can
- * be different from body's size
+ * be different from body's size. body.getUserData() should be a reference to
+ * the related BodyActor instance
  */
 public abstract class BodyActor extends Actor {
 	// B2D-body
@@ -23,6 +24,18 @@ public abstract class BodyActor extends Actor {
 	 * initial position as center
 	 */
 	protected abstract void initBody(final World world, final Vector2 position, final float width, final float height);
+
+	@Override
+	public boolean remove() {
+		// Return true if it had parent
+		if (super.remove()) {
+			// Remove body
+			body.getWorld().destroyBody(body);
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public float getX() {

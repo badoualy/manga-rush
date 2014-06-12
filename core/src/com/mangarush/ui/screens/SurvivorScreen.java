@@ -19,7 +19,7 @@ public class SurvivorScreen extends FixedFpsScreen {
 	public void show() {
 		InputMultiplexer im = new InputMultiplexer();
 		im.addProcessor(stage);
-		im.addProcessor(new GestureDetector(new MRGestureListener(stage.getPlayer())));
+		im.addProcessor(new GestureDetector(20f, 0f, 1.1f, 0.15f, new MRGestureListener(stage.getPlayer())));
 		Gdx.input.setInputProcessor(im);
 	}
 

@@ -15,9 +15,6 @@ import com.mangarush.ui.utils.B2DVars;
 
 /** Player actor to use in stage */
 public class Player extends Character {
-	// Player state
-	private State state;
-
 	// Animations
 	private final Animation runAnimation;
 	private final Animation jumpAnimation;
@@ -84,7 +81,7 @@ public class Player extends Character {
 			case THROW:
 				currFrame = throwAnimation.getKeyFrame(stateTime);
 				break;
-			case DEAD: // Not in sight
+			case BUMP: // Shouldn't happen
 			case FALL:
 				currFrame = fallAnimation.getKeyFrame(stateTime);
 				break;
@@ -110,6 +107,7 @@ public class Player extends Character {
 
 		// Check if need to create projectile
 		if (state == State.THROW && !threw && throwAnimation.getKeyFrameIndex(stateTime) == 1) {
+			// Get center-right position
 			Vector2 pos = getPosition().add(getWidth(), getHeight() / 2f);
 			getStage().addActor(new Projectile(projectile, body.getWorld(), pos));
 			threw = true;
@@ -153,7 +151,6 @@ public class Player extends Character {
 		} else if (isAlive() && getY() < -getHeight() * 1.5f) {
 			// Player is under the map : lost : *1.5 for drawing safety
 			body.setLinearVelocity(0, 0);
-			state = State.DEAD;
 			setAlive(false);
 		}
 	}

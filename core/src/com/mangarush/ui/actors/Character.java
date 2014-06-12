@@ -20,10 +20,11 @@ import com.mangarush.ui.utils.B2DVars;
  */
 public abstract class Character extends BodyActor {
 	protected enum State {
-		RUN, JUMP, FALL, LANDED, THROW, DEAD
+		RUN, JUMP, FALL, LANDED, THROW, BUMP
 	}
 
 	// State
+	protected State state;
 	private boolean alive;
 
 	// Sprites and animations
@@ -67,7 +68,7 @@ public abstract class Character extends BodyActor {
 		fdef.friction = 0;
 		fdef.density = 1;
 		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
-		fdef.filter.maskBits = B2DVars.GROUND_MASK;
+		fdef.filter.maskBits = B2DVars.GROUND_MASK | B2DVars.ENEMY_MASK;
 		ps.setAsBox(width / 2f / PPM, height / 2f / PPM);
 		body.createFixture(fdef);
 		ps.dispose();
@@ -88,6 +89,10 @@ public abstract class Character extends BodyActor {
 
 	@Override
 	public void act(float delta) {
+		// Game is over : no more animations
+		if (!alive)
+			return;
+
 		// Update animation stateTime
 		stateTime += delta;
 

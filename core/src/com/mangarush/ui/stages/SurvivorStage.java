@@ -10,13 +10,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actions.HighScoreAction;
-import com.mangarush.ui.actors.Enemy;
 import com.mangarush.ui.actors.HUD;
 import com.mangarush.ui.actors.Player;
+import com.mangarush.ui.actors.Projectile;
 import com.mangarush.ui.actors.RandomMapRenderer;
 import com.mangarush.ui.graphics.Background;
 import com.mangarush.ui.handlers.MRContactListener;
@@ -29,7 +30,7 @@ public class SurvivorStage extends Stage {
 	// Constants
 	private final int tileSize = 32;
 	private final float backgroundSpeed = 1f / 2f; // Background speed (relative to platform speed)
-	private final float timeBeforeStart = 0.5f; // Time in seconds before player starts falling
+	private final float timeBeforeStart = 0f; // Time in seconds before player starts falling
 
 	// Map
 	private RandomMapRenderer map;
@@ -105,28 +106,27 @@ public class SurvivorStage extends Stage {
 		background = new Background(Game.GDXVars().getTexture(Paths.stageBackground));
 
 		// Player
-		player = new Player(character, world, new Vector2(0, V_HEIGHT / B2DVars.PPM));
+		player = new Player(character, world, new Vector2(25 / B2DVars.PPM, (V_HEIGHT - 100) / B2DVars.PPM));
 
 		// HUD (bounds = screen)
 		hud = new HUD(player);
 		hud.setBounds(0, 0, V_WIDTH, V_HEIGHT);
 
-		// Enemy
-		Enemy enemy = new Enemy(3, world, new Vector2(6, V_HEIGHT / 1.2f / B2DVars.PPM));
-		addActor(enemy);
-
 		// Add actors in right order
-		addActor(hud);
 		addActor(player);
+		addActor(hud);
 
 		// Highscore checking action : we had it to the player for more logic
 		highScoreAction = new HighScoreAction(this);
 		player.addAction(highScoreAction);
+
+		hud.toFront();
+		player.toBack();
 	}
 
 	private void initMap() {
 		// Map
-		map = new RandomMapRenderer(world, V_WIDTH / tileSize, V_HEIGHT / tileSize, tileSize);
+		map = new RandomMapRenderer(this, V_WIDTH / tileSize, V_HEIGHT / tileSize, tileSize);
 
 		// Add to the back (behind all other actors)
 		addActor(map);
@@ -146,6 +146,17 @@ public class SurvivorStage extends Stage {
 
 		// Update B2D world
 		world.step(Game.FIXED_FPS, 6, 3);
+
+		// Check if projectiles are out of screen : playerPos + half camera size * 2 to be sure
+		for (Actor actor : getActors()) {
+			if (actor instanceof Projectile) {
+				Projectile projectile = (Projectile) actor;
+				if (projectile.getCenterX() > player.getCenterX() + camCenterX * 2f) {
+					System.out.println("remove");
+					projectile.remove();
+				}
+			}
+		}
 	}
 
 	@Override
