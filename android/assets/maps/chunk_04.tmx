@@ -5,7 +5,7 @@
  </tileset>
  <layer name="ground" width="30" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2QQQrAIAwETfSm/f939VJYZJNUKIVCFua0YTQpJZPJ/D3Xx05ZKKEuBiBOx5BgthFufwewa1vHQB/rFVw7lufpu+z/li9613Od7Mvuy+a9LrrjG/ue3NmbnaVzGykIBwAA
+   H4sIAAAAAAAAC2NgGAWjYBQMdcBLZ/sYgZgJC2YGYh4kzIhHDhtmJKCWBQuGmc+NhJHlWNDksGFk87DJMyGZhY5xmUOsvdjcj8s8QvbiM4sU/2ILX2zq8ckRCkdq+JeUcManFgCBlpmHCAcAAA==
   </data>
  </layer>
  <objectgroup name="ground_obj" width="30" height="15">
@@ -15,7 +15,6 @@
  </objectgroup>
  <objectgroup name="enemy_obj" width="30" height="15">
   <object x="160" y="256" width="32" height="32"/>
-  <object x="352" y="256" width="32" height="32"/>
   <object x="736" y="256" width="32" height="32"/>
  </objectgroup>
 </map>

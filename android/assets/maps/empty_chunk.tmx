@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="map_atlas" tilewidth="32" tileheight="32">
   <image source="../sheets/map_sheet.png" width="128" height="128"/>
  </tileset>
+ <tileset firstgid="17" name="tiles" tilewidth="32" tileheight="32" spacing="4" margin="2">
+  <image source="../atlases/tiles.png" width="128" height="256"/>
+ </tileset>
  <layer name="ground" width="30" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NgGAWjYBSMglEwCkYuAABNKlmzCAcAAA==

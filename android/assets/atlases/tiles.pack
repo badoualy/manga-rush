@@ -93,3 +93,10 @@ repeat: none
   orig: 32, 32
   offset: 0, 0
   index: -1
+13
+  rotate: false
+  xy: 42, 156
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

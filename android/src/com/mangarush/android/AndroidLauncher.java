@@ -13,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.disableAudio = true;
 		config.hideStatusBar = true;
+		config.useImmersiveMode = true;
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		config.useWakelock = true;
