@@ -94,7 +94,7 @@ public class MapChunk {
 	 */
 	public void setupToStage(SurvivorStage stage, float originX, float originY) {
 		setupGrounToWorld(originX, originY); // Setup ground
-		setupEnemies(stage, originX, originY);
+		//setupEnemies(stage, originX, originY);
 	}
 
 	/**

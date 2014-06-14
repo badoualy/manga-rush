@@ -112,6 +112,8 @@ public class HUD extends Group {
 	/** Print a message on screen for a fixed duration (may be infinite -1) */
 	public void showMessage(final Message message) {
 		messages.add(message);
+		// Set back to front (because enemies are added later, they're in front of hud)
+		toFront();
 	}
 
 	/**

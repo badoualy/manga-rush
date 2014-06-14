@@ -1,5 +1,6 @@
 package com.mangarush.ui.actors;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,15 +16,15 @@ public abstract class BodyActor extends Actor {
 	// B2D-body
 	protected Body body;
 
-	public BodyActor(final World world, final Vector2 position, final float width, final float height) {
-		initBody(world, position, width, height);
+	public BodyActor(final World world, final Rectangle bounds) {
+		initBody(world, bounds);
 	}
 
 	/**
 	 * Instanciate and set a B2D body in the given world with the current
 	 * initial position as center
 	 */
-	protected abstract void initBody(final World world, final Vector2 position, final float width, final float height);
+	protected abstract void initBody(final World world, final Rectangle bounds);
 
 	@Override
 	public boolean remove() {

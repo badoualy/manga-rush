@@ -5,6 +5,7 @@ import static com.mangarush.ui.utils.B2DVars.PPM;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -22,7 +23,7 @@ public class Projectile extends BodyActor {
 	private boolean hit; // Has hit ?
 
 	public Projectile(TextureRegion texture, World world, Vector2 position) {
-		super(world, position, texture.getRegionWidth(), texture.getRegionHeight());
+		super(world, new Rectangle(position.x, position.y, texture.getRegionWidth(), texture.getRegionHeight()));
 
 		this.texture = texture;
 		setBounds(position.x, position.y, texture.getRegionWidth(), texture.getRegionHeight());
@@ -31,14 +32,14 @@ public class Projectile extends BodyActor {
 	}
 
 	@Override
-	protected void initBody(World world, Vector2 position, float width, float height) {
+	protected void initBody(World world, Rectangle bounds) {
 		// Object instanciate
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
 		PolygonShape ps;
 
 		// Body
-		bdef.position.set(position.x / PPM, position.y / PPM);
+		bdef.position.set(bounds.x / PPM, bounds.y / PPM);
 		bdef.type = BodyType.DynamicBody; // To dynamic
 		bdef.fixedRotation = true; // Animation handle the rotations
 		body = world.createBody(bdef);
@@ -51,7 +52,7 @@ public class Projectile extends BodyActor {
 		fdef.density = 1;
 		fdef.filter.categoryBits = B2DVars.PROJECTILE_MASK;
 		fdef.filter.maskBits = B2DVars.ENEMY_MASK;
-		ps.setAsBox(width / 2f / PPM, height / 2f / PPM);
+		ps.setAsBox(bounds.width / 2f / PPM, bounds.height / 2f / PPM);
 		body.createFixture(fdef);
 		ps.dispose();
 	}

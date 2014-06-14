@@ -148,11 +148,11 @@ public class SurvivorStage extends Stage {
 		world.step(Game.FIXED_FPS, 6, 3);
 
 		// Check if projectiles are out of screen : playerPos + half camera size * 2 to be sure
+		// Could be faster to use a new group to add projectiles in, this way we only iterate over this group
 		for (Actor actor : getActors()) {
 			if (actor instanceof Projectile) {
 				Projectile projectile = (Projectile) actor;
 				if (projectile.getCenterX() > player.getCenterX() + camCenterX * 2f) {
-					System.out.println("remove");
 					projectile.remove();
 				}
 			}

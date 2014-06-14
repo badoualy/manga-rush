@@ -43,6 +43,7 @@ public abstract class Paths {
 			charactersDir + "naruto.txt",
 			charactersDir + "misaka.txt",
 			charactersDir + "shana.txt",
+			charactersDir + "thumb.txt",
 			charactersDir + "itachi.txt"
 	};
 }

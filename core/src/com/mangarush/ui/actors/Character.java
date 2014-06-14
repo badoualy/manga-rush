@@ -5,7 +5,7 @@ import static com.mangarush.ui.utils.B2DVars.PPM;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -33,8 +33,8 @@ public abstract class Character extends BodyActor {
 	protected float stateTime;
 
 	/** Takes the ID and the world to add body in and its initial position */
-	public Character(final int characterId, final World world, final Vector2 position) {
-		super(world, position, 45, 50);
+	public Character(final int characterId, final World world, final Rectangle bounds) {
+		super(world, bounds);
 
 		// State
 		alive = true;
@@ -44,20 +44,20 @@ public abstract class Character extends BodyActor {
 		atlas = Game.GDXVars().getTextureAtlas(Paths.charactersAtlases[characterId]);
 		stateTime = 0f;
 
-		// Default bounds
-		setBounds(0, 0, 45, 50);
+		// Set actor bounds
+		setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
 	}
 
 	/** Init B2D body */
 	@Override
-	protected void initBody(final World world, final Vector2 position, final float width, final float height) {
+	protected void initBody(final World world, final Rectangle bounds) {
 		// Object instanciate
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
 		PolygonShape ps;
 
 		// body
-		bdef.position.set(position);
+		bounds.getPosition(bdef.position); // Sets bdef.position with bounds' position
 		bdef.type = BodyType.DynamicBody; // To dynamic
 		bdef.fixedRotation = true;
 		body = world.createBody(bdef);
@@ -69,7 +69,7 @@ public abstract class Character extends BodyActor {
 		fdef.density = 1;
 		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
 		fdef.filter.maskBits = B2DVars.GROUND_MASK | B2DVars.ENEMY_MASK;
-		ps.setAsBox(width / 2f / PPM, height / 2f / PPM);
+		ps.setAsBox(bounds.width / 2f / PPM, bounds.height / 2f / PPM);
 		body.createFixture(fdef);
 		ps.dispose();
 	}

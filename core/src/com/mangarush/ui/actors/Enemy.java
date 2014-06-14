@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
@@ -18,8 +19,8 @@ public class Enemy extends Character {
 	private final Animation stanceAnimation;
 	private final Animation bumpAnimation;
 
-	public Enemy(int characterId, World world, final Vector2 position) {
-		super(characterId, world, position);
+	public Enemy(final int characterId, final World world, final Vector2 position) {
+		super(characterId, world, new Rectangle(position.x, position.y, 45, 55));
 
 		// Load animations
 		stanceAnimation = new Animation(0.15f, atlas.findRegions("stance"), PlayMode.LOOP);
@@ -27,8 +28,8 @@ public class Enemy extends Character {
 	}
 
 	@Override
-	protected void initBody(World world, Vector2 position, float width, float height) {
-		super.initBody(world, position, width, height);
+	protected void initBody(final World world, final Rectangle bounds) {
+		super.initBody(world, bounds);
 
 		// By default in character class, category = player and mask = ground
 		Filter filter = body.getFixtureList().get(0).getFilterData();

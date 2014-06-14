@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -29,8 +30,8 @@ public class Player extends Character {
 	private boolean doubleJumped;
 	private boolean threw; // Did throw the projectile ?
 
-	public Player(final int characterId, World world, final Vector2 position) {
-		super(characterId, world, position);
+	public Player(final int characterId, final World world, final Vector2 position) {
+		super(characterId, world, new Rectangle(position.x, position.y, 45, 50));
 
 		// Initial state
 		state = State.FALL;
@@ -51,8 +52,8 @@ public class Player extends Character {
 	}
 
 	@Override
-	protected void initBody(World world, Vector2 position, float width, float height) {
-		super.initBody(world, position, width, height);
+	protected void initBody(final World world, final Rectangle bounds) {
+		super.initBody(world, bounds);
 
 		/* Init the player foot sensor, basic characters don't need it since
 		 * they don't jump */
@@ -65,7 +66,7 @@ public class Player extends Character {
 		fdef.filter.categoryBits = B2DVars.PLAYER_MASK;
 		fdef.filter.maskBits = B2DVars.GROUND_MASK;
 		fdef.shape = ps = new PolygonShape();
-		ps.setAsBox(width / 6f / PPM, 5f / PPM, new Vector2(0, -height / 2f / PPM), 0f);
+		ps.setAsBox(bounds.width / 6f / PPM, 5f / PPM, new Vector2(0, -bounds.height / 2f / PPM), 0f);
 		body.createFixture(fdef).setUserData(B2DVars.USERD_FOOT_SENSOR);
 		ps.dispose();
 	}
