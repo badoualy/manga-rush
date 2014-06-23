@@ -1,0 +1,109 @@
+luffy_atlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bump
+  rotate: false
+  xy: 57, 140
+  size: 51, 48
+  orig: 51, 48
+  offset: 0, 0
+  index: 1
+bump
+  rotate: false
+  xy: 77, 201
+  size: 69, 27
+  orig: 69, 27
+  offset: 0, 0
+  index: 2
+bump
+  rotate: false
+  xy: 4, 201
+  size: 69, 17
+  orig: 69, 17
+  offset: 0, 0
+  index: 3
+fall
+  rotate: false
+  xy: 122, 4
+  size: 41, 67
+  orig: 41, 67
+  offset: 0, 0
+  index: 1
+fall
+  rotate: false
+  xy: 78, 4
+  size: 40, 68
+  orig: 40, 68
+  offset: 0, 0
+  index: 2
+jump
+  rotate: false
+  xy: 4, 4
+  size: 33, 71
+  orig: 33, 71
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 41, 4
+  size: 33, 71
+  orig: 33, 71
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 55, 79
+  size: 47, 55
+  orig: 47, 55
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 4, 79
+  size: 47, 57
+  orig: 47, 57
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 112, 140
+  size: 55, 52
+  orig: 55, 52
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 158, 79
+  size: 48, 56
+  orig: 48, 56
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 106, 79
+  size: 48, 55
+  orig: 48, 55
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 4, 140
+  size: 49, 57
+  orig: 49, 57
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 171, 140
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: 7
+run
+  rotate: false
+  xy: 167, 4
+  size: 46, 57
+  orig: 46, 57
+  offset: 0, 0
+  index: 8

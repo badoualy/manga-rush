@@ -140,11 +140,11 @@ public class MapChunk {
 	 * @param originY
 	 *            the chunk's y-axis origin in stage coordinates (!B2D)
 	 */
-	private void setupEnemies(SurvivorStage stage, float originX, float originY) {
+	public void setupEnemies(SurvivorStage stage, float originX, float originY) {
 		for (Vector2 position : enemiesPos) {
 			// Have to create a new instance, Vector2.add would change it
 			Vector2 pos = new Vector2((position.x + originX) / B2DVars.PPM, (position.y) / B2DVars.PPM);
-			stage.addActor(new Enemy(3, B2DVars.groundBody.getWorld(), pos));
+			stage.addActor(new Enemy(4, B2DVars.groundBody.getWorld(), pos));
 		}
 	}
 

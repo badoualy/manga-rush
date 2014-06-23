@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mangarush.constants.Paths;
+import com.mangarush.constants.UnlockScores;
 import com.mangarush.ui.Game;
+import com.mangarush.ui.actions.CharacterUnlockAction;
 import com.mangarush.ui.actions.HighScoreAction;
 import com.mangarush.ui.actors.HUD;
 import com.mangarush.ui.actors.Player;
@@ -62,6 +64,7 @@ public class SurvivorStage extends Stage {
 		initViewport(); // Worldsize, cameras
 		initB2DWorld(); // B2D world
 		initActors(character); // Stage content (actors)
+		initActions();
 		initMap(); // Initialise map
 
 		over = false;
@@ -116,12 +119,20 @@ public class SurvivorStage extends Stage {
 		addActor(player);
 		addActor(hud);
 
+		hud.toFront();
+		player.toBack();
+	}
+
+	/** Init stage's actions */
+	private void initActions() {
 		// Highscore checking action : we had it to the player for more logic
 		highScoreAction = new HighScoreAction(this);
 		player.addAction(highScoreAction);
 
-		hud.toFront();
-		player.toBack();
+		SaveData save = Game.Save();
+		// Check if luffy is unlocked
+		if (!save.characters.get("luffy"))
+			addAction(new CharacterUnlockAction(this, "luffy", UnlockScores.LUFFY));
 	}
 
 	private void initMap() {
@@ -247,5 +258,9 @@ public class SurvivorStage extends Stage {
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public HUD getHud() {
+		return hud;
 	}
 }

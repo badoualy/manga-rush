@@ -20,12 +20,11 @@ public class AtlasSelector extends Group {
 	private final Image[] contents;
 	private final TextButton leftButton, rightButton;
 	private int selectedIndex;
+	private final int charactersCount;
 
-	// Secret code vars
-	private int countLeft, countRight;
-
-	public AtlasSelector(final TextureAtlas atlas) {
+	public AtlasSelector(final TextureAtlas atlas, int charactersCount) {
 		// Load carrousel elements
+		this.charactersCount = charactersCount;
 		contents = new Image[atlas.getRegions().size];
 		for (int i = 0; i < contents.length; i++) {
 			contents[i] = new Image(atlas.getRegions().get(i));
@@ -50,10 +49,6 @@ public class AtlasSelector extends Group {
 
 		initListeners();
 
-		// Secret code
-		countLeft = 0;
-		countRight = 0;
-
 		setSize(200, 20);
 	}
 
@@ -70,13 +65,7 @@ public class AtlasSelector extends Group {
 
 				selectedIndex--;
 				if (selectedIndex < 0)
-					selectedIndex = contents.length - 2;
-				// Code
-				if (countRight > 0) { // Was turning right
-					countLeft = 0;
-					countRight = 0;
-				}
-				countLeft = (countLeft + 1) % 20; // Can't be greater than 19
+					selectedIndex = charactersCount - 1;
 
 				// Move in new selection : from left to center
 				ParallelAction moveInAction = new ParallelAction();
@@ -98,13 +87,7 @@ public class AtlasSelector extends Group {
 				contents[selectedIndex].addAction(moveOutAction);
 
 				// Update current selection index
-				selectedIndex = (selectedIndex + 1) % (contents.length - 1);
-				// Code
-				countRight++;
-				if (countRight == 7 && countLeft == 19) {
-					// Secret code success
-					selectedIndex = 3;
-				}
+				selectedIndex = (selectedIndex + 1) % charactersCount;
 
 				// Move in new selection : from right to center
 				ParallelAction moveInAction = new ParallelAction();

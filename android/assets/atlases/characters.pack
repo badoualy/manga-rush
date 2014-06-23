@@ -4,29 +4,29 @@ filter: Linear,Linear
 repeat: none
 naruto
   rotate: false
-  xy: 34, 4
+  xy: 71, 4
   size: 43, 58
   orig: 43, 58
   offset: 0, 0
   index: -1
 mikasa
   rotate: false
-  xy: 4, 4
+  xy: 41, 4
   size: 26, 65
   orig: 26, 65
   offset: 0, 0
   index: -1
 shana
   rotate: false
-  xy: 4, 73
+  xy: 4, 74
   size: 48, 60
   orig: 48, 60
   offset: 0, 0
   index: -1
-thumb
+luffy
   rotate: false
-  xy: 56, 73
-  size: 38, 60
-  orig: 38, 60
+  xy: 4, 4
+  size: 33, 66
+  orig: 33, 66
   offset: 0, 0
   index: -1
