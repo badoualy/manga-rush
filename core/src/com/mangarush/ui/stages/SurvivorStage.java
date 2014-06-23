@@ -133,6 +133,9 @@ public class SurvivorStage extends Stage {
 		// Check if luffy is unlocked
 		if (!save.characters.get("luffy"))
 			addAction(new CharacterUnlockAction(this, "luffy", UnlockScores.LUFFY));
+		// Check if yoh is unlocked
+		if (!save.characters.get("yoh"))
+			addAction(new CharacterUnlockAction(this, "yoh", UnlockScores.YOH));
 	}
 
 	private void initMap() {

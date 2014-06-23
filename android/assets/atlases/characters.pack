@@ -30,3 +30,10 @@ luffy
   orig: 33, 66
   offset: 0, 0
   index: -1
+yoh
+  rotate: false
+  xy: 56, 74
+  size: 43, 47
+  orig: 43, 47
+  offset: 0, 0
+  index: -1

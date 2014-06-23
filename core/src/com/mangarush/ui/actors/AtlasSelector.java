@@ -20,7 +20,7 @@ public class AtlasSelector extends Group {
 	private final Image[] contents;
 	private final TextButton leftButton, rightButton;
 	private int selectedIndex;
-	private final int charactersCount;
+	private int charactersCount;
 
 	public AtlasSelector(final TextureAtlas atlas, int charactersCount) {
 		// Load carrousel elements
@@ -114,5 +114,9 @@ public class AtlasSelector extends Group {
 
 	public int getSelectedIndex() {
 		return selectedIndex;
+	}
+
+	public void setCharactersCount(int charactersCount) {
+		this.charactersCount = charactersCount;
 	}
 }

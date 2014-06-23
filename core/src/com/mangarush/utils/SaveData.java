@@ -24,6 +24,7 @@ public class SaveData {
 
 		characters = new HashMap<>(10);
 		characters.put("luffy", prefs.getBoolean("luffy", false));
+		characters.put("yoh", prefs.getBoolean("yoh", false));
 	}
 
 	/** Save datas (flush Preferences) */

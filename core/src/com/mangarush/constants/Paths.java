@@ -45,6 +45,7 @@ public abstract class Paths {
 			charactersDir + "misaka.txt",
 			charactersDir + "shana.txt",
 			charactersDir + "luffy.txt",
+			charactersDir + "yoh.txt"
 	};
 
 	/** Player jump sound */

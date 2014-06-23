@@ -1,0 +1,109 @@
+yoh_atlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bump
+  rotate: false
+  xy: 4, 4
+  size: 45, 48
+  orig: 45, 48
+  offset: 0, 0
+  index: 1
+bump
+  rotate: false
+  xy: 53, 4
+  size: 44, 48
+  orig: 44, 48
+  offset: 0, 0
+  index: 2
+bump
+  rotate: false
+  xy: 101, 4
+  size: 47, 45
+  orig: 47, 45
+  offset: 0, 0
+  index: 3
+bump
+  rotate: false
+  xy: 152, 4
+  size: 48, 21
+  orig: 48, 21
+  offset: 0, 0
+  index: 4
+fall
+  rotate: false
+  xy: 4, 56
+  size: 58, 56
+  orig: 58, 56
+  offset: 0, 0
+  index: 1
+fall
+  rotate: false
+  xy: 66, 56
+  size: 58, 56
+  orig: 58, 56
+  offset: 0, 0
+  index: 2
+jump
+  rotate: false
+  xy: 128, 56
+  size: 47, 54
+  orig: 47, 54
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 179, 56
+  size: 48, 53
+  orig: 48, 53
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 4, 116
+  size: 43, 48
+  orig: 43, 48
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 51, 116
+  size: 45, 48
+  orig: 45, 48
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 100, 116
+  size: 49, 48
+  orig: 49, 48
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 153, 116
+  size: 46, 48
+  orig: 46, 48
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 203, 116
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 4, 168
+  size: 43, 48
+  orig: 43, 48
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 51, 168
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 7

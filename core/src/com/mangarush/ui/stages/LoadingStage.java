@@ -71,14 +71,14 @@ public class LoadingStage extends Stage {
 
 		if (save.characters.get("luffy"))
 			count++;
+		if (save.characters.get("yoh"))
+			count++;
 
 		return count;
 	}
 
 	@Override
 	public void draw() {
-		// Check if done
-
 		// Draw actors
 		super.draw();
 
@@ -94,6 +94,9 @@ public class LoadingStage extends Stage {
 		progress = Game.GDXVars().assetManager.getProgress();
 		loadingBar.setProgress(progress);
 		loadingBar.setMessage((progress == 1) ? "Tap to continue" : "Textures ...");
+
+		// Check if after a resume new char unlocked : should place it elsewhere
+		selector.setCharactersCount(getCharactersCount());
 
 		super.act(delta);
 	}
