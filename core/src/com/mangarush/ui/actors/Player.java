@@ -2,6 +2,7 @@ package com.mangarush.ui.actors;
 
 import static com.mangarush.ui.utils.B2DVars.PPM;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mangarush.constants.Paths;
+import com.mangarush.ui.Game;
 import com.mangarush.ui.utils.B2DVars;
 
 /** Player actor to use in stage */
@@ -168,6 +171,7 @@ public class Player extends Character {
 		else
 			doubleJumped = true;
 
+		Game.GDXVars().assetManager.get(Paths.jumpSound, Sound.class).play();
 		state = State.JUMP;
 		stateTime = 0f;
 	}

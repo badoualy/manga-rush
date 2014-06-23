@@ -1,6 +1,7 @@
 package com.mangarush.ui.utils;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -46,6 +47,9 @@ public class GDXVars {
 		// Characters
 		for (String character : Paths.charactersAtlases)
 			assetManager.load(character, TextureAtlas.class);
+
+		// Sounds
+		assetManager.load(Paths.jumpSound, Sound.class);
 	}
 
 	/** Return the texture associated with the value */

@@ -8,6 +8,7 @@ public abstract class Paths {
 	public static final String charactersDir = "characters/";
 	public static final String fontDir = "fonts/";
 	public static final String mapsDir = "maps/";
+	public static final String soundsDir = "sounds/";
 
 	/** Game font */
 	public static final String defaultFont = fontDir + "font_01.fnt";
@@ -45,4 +46,7 @@ public abstract class Paths {
 			charactersDir + "shana.txt",
 			charactersDir + "luffy.txt",
 	};
+
+	/** Player jump sound */
+	public static final String jumpSound = soundsDir + "jump.wav";
 }

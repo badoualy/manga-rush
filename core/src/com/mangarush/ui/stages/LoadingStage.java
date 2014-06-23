@@ -63,15 +63,15 @@ public class LoadingStage extends Stage {
 		cam.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		getViewport().setCamera(cam); // Set stage default camera	
 	}
-	
+
 	/** Return the number of unlocked characters */
-	private int getCharactersCount(){
+	private int getCharactersCount() {
 		int count = 3; // By default : Naruto, Misaka, Shana
 		SaveData save = Game.Save();
-		
+
 		if (save.characters.get("luffy"))
 			count++;
-		
+
 		return count;
 	}
 
