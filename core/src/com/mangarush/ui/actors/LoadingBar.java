@@ -55,7 +55,7 @@ public class LoadingBar extends Actor {
 		if (progress < 1)
 			batch.draw(hiddenRegion, getX() + barRegion.getRegionWidth() - hiddenRegion.getRegionWidth(), getY());
 
-		if (!message.isEmpty()) {
+		if (message.length() > 0) {
 			// Write progress message
 			TextBounds bounds = font.getBounds(message);
 			font.draw(batch, message, getX() + getWidth() / 2 - bounds.width / 2, getY() + 75);
