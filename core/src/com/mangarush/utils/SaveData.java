@@ -22,7 +22,7 @@ public class SaveData {
 		highScore = prefs.getInteger("highScore", 0);
 		timeSpend = prefs.getLong("timeSpend", 0);
 
-		characters = new HashMap<>(10);
+		characters = new HashMap<String, Boolean>(10);
 		characters.put("luffy", prefs.getBoolean("luffy", false));
 		characters.put("yoh", prefs.getBoolean("yoh", false));
 	}

@@ -12,13 +12,7 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.springsource.ide.eclipse.gradle.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>res</name>
-			<type>2</type>
-			<location>E:/home/workspace/java/manga-rush/android/res</location>
-		</link>
-	</linkedResources>
 </projectDescription>

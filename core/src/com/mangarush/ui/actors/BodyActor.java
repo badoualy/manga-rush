@@ -29,6 +29,7 @@ public abstract class BodyActor extends Actor {
 	@Override
 	public boolean remove() {
 		// Return true if it had parent
+		// Need this because it is also called before adding to a parent
 		if (super.remove()) {
 			// Remove body
 			body.getWorld().destroyBody(body);
@@ -56,20 +57,22 @@ public abstract class BodyActor extends Actor {
 		return super.getY();
 	}
 
+	@Override
 	public float getCenterX() {
 		// Use B2D object's coordinates : auto-updated
 		if (body != null)
 			return body.getPosition().x * B2DVars.PPM;
 		// Shouldn't happen !
-		return super.getX() + getWidth() / 2f;
+		return super.getCenterX();
 	}
 
+	@Override
 	public float getCenterY() {
 		// Use B2D object's coordinates : auto-updated
 		if (body != null)
 			return body.getPosition().y * B2DVars.PPM;
 		// Shouldn't happen !
-		return super.getY() + getHeight() / 2f;
+		return super.getCenterY();
 	}
 
 	public Vector2 getPosition() {
