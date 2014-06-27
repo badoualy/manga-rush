@@ -6,6 +6,7 @@ import static com.mangarush.ui.Game.V_WIDTH;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mangarush.constants.Paths;
@@ -84,7 +85,11 @@ public class LoadingStage extends Stage {
 
 		// Write title
 		getBatch().begin();
+		font.setScale(1f);
 		font.draw(getBatch(), Game.TITLE, getWidth() / 2f - font.getBounds(Game.TITLE).width / 2f, getHeight() - 10f);
+		font.setScale(0.5f);
+		TextBounds bounds = font.getBounds("Highscore : " + Game.Save().highScore);
+		font.draw(getBatch(), "Highscore : " + Game.Save().highScore, getWidth() - bounds.width, getHeight());
 		getBatch().end();
 	}
 
@@ -93,7 +98,7 @@ public class LoadingStage extends Stage {
 		Game.GDXVars().assetManager.update();
 		progress = Game.GDXVars().assetManager.getProgress();
 		loadingBar.setProgress(progress);
-		loadingBar.setMessage((progress == 1) ? "Tap to continue" : "Textures ...");
+		loadingBar.setMessage((progress == 1) ? "Tap to continue..." : "Loading textures ...");
 
 		// Check if after a resume new char unlocked : should place it elsewhere
 		selector.setCharactersCount(getCharactersCount());

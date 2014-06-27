@@ -60,6 +60,7 @@ public class SurvivorStage extends Stage {
 
 	public SurvivorStage(int character) {
 		super();
+		Game.GDXVars().getFont(Paths.defaultFont).setScale(1f); // Reset font scale
 
 		initViewport(); // Worldsize, cameras
 		initB2DWorld(); // B2D world
@@ -67,6 +68,7 @@ public class SurvivorStage extends Stage {
 		initActions();
 		initMap(); // Initialise map
 
+		// State vars
 		over = false;
 		highScored = false;
 		elapsedTime = 0f;

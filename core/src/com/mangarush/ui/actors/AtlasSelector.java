@@ -1,5 +1,7 @@
 package com.mangarush.ui.actors;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -38,10 +40,10 @@ public class AtlasSelector extends Group {
 		selectedIndex = 0;
 
 		// Buttons
-		leftButton = new TextButton(" < ", new TextButtonStyle(null, null, null, Game.GDXVars().getFont(
-				Paths.defaultFont)));
-		rightButton = new TextButton(" > ", new TextButtonStyle(null, null, null, Game.GDXVars().getFont(
-				Paths.defaultFont)));
+		BitmapFont font = Game.GDXVars().getFont(Paths.defaultFont);
+		font.setScale(1f);
+		leftButton = new TextButton(" < ", new TextButtonStyle(null, null, null, font));
+		rightButton = new TextButton(" > ", new TextButtonStyle(null, null, null, font));
 
 		// Add buttons
 		addActor(leftButton);
@@ -99,6 +101,13 @@ public class AtlasSelector extends Group {
 			}
 		});
 
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		leftButton.getLabel().setFontScale(1f);
+		rightButton.getLabel().setFontScale(1f);
+		super.draw(batch, parentAlpha);
 	}
 
 	@Override
