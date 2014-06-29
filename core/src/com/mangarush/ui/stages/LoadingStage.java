@@ -5,15 +5,14 @@ import static com.mangarush.ui.Game.V_WIDTH;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mangarush.constants.Paths;
 import com.mangarush.ui.Game;
 import com.mangarush.ui.actors.AtlasSelector;
 import com.mangarush.ui.actors.LoadingBar;
-import com.mangarush.utils.SaveData;
 
 /** A stage for loading screen */
 public class LoadingStage extends Stage {
@@ -45,9 +44,9 @@ public class LoadingStage extends Stage {
 		addActor(loadingBar);
 
 		// Selection group
-		selector = new AtlasSelector(Game.GDXVars().getTextureAtlas(Paths.charactersPack), getCharactersCount());
+		selector = new AtlasSelector(Game.GDXVars().getTextureAtlas(Paths.charactersPack), Game.Save().characters);
 		addActor(selector);
-		selector.setPosition(getWidth() / 2f - selector.getWidth() / 2f, 110);
+		selector.setPosition(getWidth() / 2f - selector.getWidth() / 2f, 130);
 
 		progress = 0f;
 
@@ -63,19 +62,6 @@ public class LoadingStage extends Stage {
 		OrthographicCamera cam = new OrthographicCamera();
 		cam.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		getViewport().setCamera(cam); // Set stage default camera	
-	}
-
-	/** Return the number of unlocked characters */
-	private int getCharactersCount() {
-		int count = 3; // By default : Naruto, Misaka, Shana
-		SaveData save = Game.Save();
-
-		if (save.characters.get("luffy"))
-			count++;
-		if (save.characters.get("yoh"))
-			count++;
-
-		return count;
 	}
 
 	@Override
@@ -99,9 +85,7 @@ public class LoadingStage extends Stage {
 		progress = Game.GDXVars().assetManager.getProgress();
 		loadingBar.setProgress(progress);
 		loadingBar.setMessage((progress == 1) ? "Tap to continue..." : "Loading textures ...");
-
-		// Check if after a resume new char unlocked : should place it elsewhere
-		selector.setCharactersCount(getCharactersCount());
+		selector.setSelectable(Game.Save().characters);
 
 		super.act(delta);
 	}
@@ -110,8 +94,10 @@ public class LoadingStage extends Stage {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (!super.touchUp(screenX, screenY, pointer, button)) {
 			if (Game.GDXVars().assetManager.update()) { // Load some, will return true if done loading
-				Game.startSurvivorGame(selector.getSelectedIndex());
-				return true;
+				if (Game.Save().characters[selector.getSelectedIndex()]) {
+					Game.startSurvivorGame(selector.getSelectedIndex());
+					return true;
+				}
 			}
 		}
 

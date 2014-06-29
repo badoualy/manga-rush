@@ -40,13 +40,14 @@ public abstract class Paths {
 	};
 
 	/** Characters atlases */
-	public static final String[] charactersAtlases = {
-			charactersDir + "naruto.txt",
-			charactersDir + "misaka.txt",
-			charactersDir + "shana.txt",
-			charactersDir + "luffy.txt",
-			charactersDir + "yoh.txt"
-	};
+	public static final String[] charactersAtlases;
+
+	/** Construct charactersAtlases from Strings.characterNames */
+	static {
+		charactersAtlases = new String[Strings.characterNames.length];
+		for (int i = 0; i < charactersAtlases.length; i++)
+			charactersAtlases[i] = charactersDir + Strings.characterNames[i] + ".txt";
+	}
 
 	/** Player jump sound */
 	public static final String jumpSound = soundsDir + "jump.wav";

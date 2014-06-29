@@ -24,8 +24,9 @@ public class MapChunk {
 	public static final int WIDTH = 30;
 	public static final int HEIGHT = 15;
 
+	/** Chunk's content */
 	private short[][] map; // Tiles values
-	private List<Rectangle> groundRects; // ground objects rectangles
+	private List<Rectangle> groundRects; // Ground objects rectangles
 	private List<Vector2> enemiesPos; // Positions of all enemy on chunk
 
 	public MapChunk(String file) {

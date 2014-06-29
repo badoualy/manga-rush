@@ -12,10 +12,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mangarush.characters.unlockers.UnlockerFactory;
 import com.mangarush.constants.Paths;
-import com.mangarush.constants.UnlockScores;
 import com.mangarush.ui.Game;
-import com.mangarush.ui.actions.CharacterUnlockAction;
+import com.mangarush.ui.actions.CharacterUnlockerAction;
 import com.mangarush.ui.actions.HighScoreAction;
 import com.mangarush.ui.actors.HUD;
 import com.mangarush.ui.actors.Player;
@@ -131,13 +131,11 @@ public class SurvivorStage extends Stage {
 		highScoreAction = new HighScoreAction(this);
 		player.addAction(highScoreAction);
 
+		// Add actions to check unlocking
 		SaveData save = Game.Save();
-		// Check if luffy is unlocked
-		if (!save.characters.get("luffy"))
-			addAction(new CharacterUnlockAction(this, "luffy", UnlockScores.LUFFY));
-		// Check if yoh is unlocked
-		if (!save.characters.get("yoh"))
-			addAction(new CharacterUnlockAction(this, "yoh", UnlockScores.YOH));
+		for (int i = 0; i < save.characters.length; i++)
+			if (!save.characters[i])
+				addAction(new CharacterUnlockerAction(this, UnlockerFactory.getInstance(i)));
 	}
 
 	private void initMap() {

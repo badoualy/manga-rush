@@ -79,7 +79,7 @@ public class HUD extends Group {
 		if (!messages.isEmpty()) {
 			// We have a message to show
 			TextBounds bounds = font.getBounds(messages.get(0).message);
-			font.draw(batch, messages.get(0).message, getX() + getWidth() / 2f - bounds.width / 2f, getHeight() / 1.2f);
+			font.draw(batch, messages.get(0).message, getCenterX() - bounds.width / 2f, getHeight() / 1.2f);
 		}
 	}
 

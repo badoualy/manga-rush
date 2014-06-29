@@ -59,7 +59,7 @@ public class LoadingBar extends Actor {
 			// Write progress message
 			font.setScale(0.8f);
 			TextBounds bounds = font.getBounds(message);
-			font.draw(batch, message, getX() + getWidth() / 2 - bounds.width / 2, getY() + 65);
+			font.draw(batch, message, getCenterX() - bounds.width / 2, getY() + 65);
 		}
 	}
 
