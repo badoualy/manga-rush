@@ -32,8 +32,15 @@ luffy
   index: -1
 yoh
   rotate: false
-  xy: 56, 74
+  xy: 4, 138
   size: 43, 47
   orig: 43, 47
+  offset: 0, 0
+  index: -1
+ueki
+  rotate: false
+  xy: 56, 74
+  size: 40, 52
+  orig: 40, 52
   offset: 0, 0
   index: -1

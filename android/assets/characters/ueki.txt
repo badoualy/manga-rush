@@ -1,0 +1,95 @@
+ueki_atlas.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bump
+  rotate: false
+  xy: 4, 4
+  size: 34, 49
+  orig: 34, 49
+  offset: 0, 0
+  index: 1
+bump
+  rotate: false
+  xy: 42, 4
+  size: 50, 36
+  orig: 50, 36
+  offset: 0, 0
+  index: 2
+bump
+  rotate: false
+  xy: 96, 4
+  size: 53, 30
+  orig: 53, 30
+  offset: 0, 0
+  index: 3
+bump
+  rotate: false
+  xy: 153, 4
+  size: 62, 23
+  orig: 62, 23
+  offset: 0, 0
+  index: 4
+fall
+  rotate: false
+  xy: 4, 57
+  size: 37, 56
+  orig: 37, 56
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 45, 57
+  size: 37, 59
+  orig: 37, 59
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 86, 57
+  size: 37, 58
+  orig: 37, 58
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 127, 57
+  size: 29, 53
+  orig: 29, 53
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 160, 57
+  size: 42, 54
+  orig: 42, 54
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 4, 120
+  size: 47, 53
+  orig: 47, 53
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 55, 120
+  size: 28, 53
+  orig: 28, 53
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 87, 120
+  size: 42, 55
+  orig: 42, 55
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 133, 120
+  size: 47, 52
+  orig: 47, 52
+  offset: 0, 0
+  index: 6

@@ -10,7 +10,7 @@ public class YohUnlocker extends Unlocker {
 
 	@Override
 	public boolean hasUnlock(Player player) {
-		if (player.getScore() > 200)
+		if (player.getScore() >= 200)
 			return true;
 		return false;
 	}

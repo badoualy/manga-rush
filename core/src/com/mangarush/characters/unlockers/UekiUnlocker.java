@@ -3,14 +3,14 @@ package com.mangarush.characters.unlockers;
 import com.mangarush.constants.Strings;
 import com.mangarush.ui.actors.Player;
 
-public class LuffyUnlocker extends Unlocker {
-	public LuffyUnlocker() {
-		super(3);
+public class UekiUnlocker extends Unlocker {
+	public UekiUnlocker() {
+		super(5);
 	}
 
 	@Override
 	public boolean hasUnlock(Player player) {
-		if (player.getScore() >= 100)
+		if (player.getScore() >= 300 && player.getCharacterId() == 3)
 			return true;
 		return false;
 	}
@@ -20,6 +20,6 @@ public class LuffyUnlocker extends Unlocker {
 	 *         Short description of how to unlock character
 	 */
 	public static String getDescription() {
-		return Strings.GET_SCORE + "100";
+		return Strings.GET_SCORE + "300 " + Strings.WITH_CHARACTER + " Luffy";
 	}
 }

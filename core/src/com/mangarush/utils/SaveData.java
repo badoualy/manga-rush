@@ -27,7 +27,7 @@ public class SaveData {
 			if (i < 3) // First 3 : free
 				characters[i] = true;
 			else
-				characters[i] = prefs.getBoolean(Strings.characterNames[i], true);
+				characters[i] = prefs.getBoolean(Strings.characterNames[i], false);
 		}
 	}
 

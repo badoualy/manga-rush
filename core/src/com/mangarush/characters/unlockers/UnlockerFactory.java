@@ -9,6 +9,8 @@ public abstract class UnlockerFactory {
 				return new LuffyUnlocker();
 			case 4:
 				return new YohUnlocker();
+			case 5:
+				return new UekiUnlocker();
 			default:
 				break;
 		}
@@ -27,6 +29,8 @@ public abstract class UnlockerFactory {
 				return LuffyUnlocker.getDescription();
 			case 4:
 				return YohUnlocker.getDescription();
+			case 5:
+				return UekiUnlocker.getDescription();
 			default:
 				break;
 		}

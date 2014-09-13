@@ -9,6 +9,7 @@ public abstract class Strings {
 
 	/** Unlocking message */
 	public static final String GET_SCORE = "Get score equal to ";
+	public static final String WITH_CHARACTER = "With ";
 
 	/** Playable characters names */
 	public static final String[] characterNames = new String[] {
@@ -16,7 +17,8 @@ public abstract class Strings {
 			"misaka",
 			"shana",
 			"luffy",
-			"yoh"
+			"yoh",
+			"ueki"
 	};
 
 	/**
